@@ -375,9 +375,9 @@ const loadhome = async (req, res) => {
         console.log(req.session.user_id);
         const bannerData = await Banner.find();
         const categories = await (await headerData()).categories;
-        const productData = await Product.find({
-             is_deleted:false
-        })
+        const productData = await Product.find({is_deleted:false })
+             
+
         if(req.session.user_id){ res.render('home'/*,{user:userData}*/ ,{userlog:1,product:productData,banner:bannerData,categories:categories})}
         // const userData = await User.findById({ _id: req.session.user_id });
        else{
