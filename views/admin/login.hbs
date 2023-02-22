@@ -1,0 +1,23 @@
+<body class="backimage" style="background-image: url(/img/0101.jpg); background-size: cover;">
+<link rel="stylesheet"type="text/css" href="/style/fullstyle.css">
+<div style="margin-top: 8em;" class="adminclass">
+  <h1 style="color: aliceblue; text-align: center;">Admin login</h1>
+<form style="border-radius: 1em;" action="" method="post">
+  <label style="color: rgb(255, 255, 255);">Email:</label>
+  <input type="text" id="username" name="email" required placeholder="Enter your email">
+  <br>
+  <label style="color: rgb(255, 255, 255);">Password:</label>
+  <input type="password" id="password" name="password" required placeholder="Enter your password">
+  <br>
+  <input type="submit" value="Login">
+</form>
+</div>
+<center> 
+  {{#if message}}
+<div class="alert alert-danger" role="alert"> {{message}}</div>
+{{else if error}}
+<div class="alert alert-danger" role="alert"> {{error}}</div>
+{{/if}}
+
+</center>
+</body>

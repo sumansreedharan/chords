@@ -1,0 +1,77 @@
+<body class="backimage" style="background-image: url(/img/0101.jpg); background-size: cover;">
+<div class="container-fluid">
+    <div class="sub-container thehome">
+        <div class="p-3">
+            <h1 class="text-light">Coupon Management</h1>
+            <div class="p-3">
+                <form class="d-flex">
+                    <a href="/admin/add-coupon" class="btn btn-success">Add coupon</a>
+                </form>
+            </div>
+            <div class="theArea">
+                <table class="table" id="list_coupons" >
+                    <thead>
+                        <tr class="text-light">
+                            <th scope="col">Name</th>
+                            <th scope="col">Offer</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each coupon}}
+                        <tr>
+                            <td>{{this.name}}</td>
+                            <td>{{this.offer}}%</td>
+                            <td>{{this.status}}</td>
+                            <td>
+                                {{#iftrue this.status "Active"}}
+                                <a href="/admin/deletecoupon?id={{this._id}}" class="btn btn-danger"
+                                    data-bs-toggle="modal" data-bs-target="#exampleModal{{@index}}">Deactivate</a>
+                                {{/iftrue}}
+
+                                {{#iftrue this.status "Inactive"}}
+                                <a href="/admin/restorecoupon?id={{this._id}}" class="btn btn-success">Activate</a>
+                                {{/iftrue}}
+                            </td>
+
+
+                        </tr>
+                        <div class="modal fade" id="exampleModal{{@index}}" tabindex="-1"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Deactivate</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you sure to deactivate coupon ?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <a href="/admin/deletecoupon?id={{this._id}}"><button type="button"
+                                                class="btn btn-danger">Deactivate</button></a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#list_coupons').DataTable();
+    });
+</script>
+</body>

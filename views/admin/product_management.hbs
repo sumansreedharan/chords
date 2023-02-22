@@ -1,0 +1,59 @@
+<body class="backimage" style="background-image: url(/img/0101.jpg); background-size: cover;">
+    <div class="container-fluid">
+        <div class="sub-container thehome">
+            <div class="p-3">
+                <h1 style="color: rgb(255, 255, 255);" class="productarea">Product Side</h1>
+                <div class="p-3">
+                    <form class="d-flex">
+                        <a href="/admin/addproduct" class="btn btn-success">Add product</a>
+                    </form>
+                </div>
+                <div class="theArea">
+                    <table class="table" id="list_users">
+                        <thead>
+                            <tr style="color: rgb(255, 255, 255);">
+                                <th scope="col">Name</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Description</th>    
+                                 
+                                <th scope="col">Action</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Stock</th> 
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each product}}
+                            <tr style="color: rgb(255, 255, 255);">
+                                <td>{{this.name}}</td>
+                                <td><img src="/productImages/{{this.image.[0]}}"  alt="..." style="max-width:18rem;height:auto" class="img-fluid" ></td>
+                                <td>₹{{this.price}}</td>
+                                <td>{{this.category}}</td>
+                                <td><p>{{this.description}}</p></td>
+                                
+                                <td>
+                                    <a href="/admin/editproduct?id={{this._id}}" class="btn btn-primary">Edit</a>
+                                    <br><br>
+                                    <a href="/admin/deleteproduct?id={{this._id}}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+                                    <br><br>
+                                    
+                                </td>
+                                <td>
+                                    {{#if is_deleted}}
+                                    <p class="text-danger">Deleted</p>
+                                    {{else}}
+                                    <p class="text-success">Not deleted</p>
+                                    {{/if}}
+                                </td>
+                                <td>{{this.quantity}}</td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

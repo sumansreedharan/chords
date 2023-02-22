@@ -1,0 +1,78 @@
+<body>
+    <div style="background-color: rgb(46, 41, 41);" class="container-fluid">
+        <div class="sub-container thehome">
+            <div class="p-3">
+                <h1 class="text-light">Manage orders</h1>
+
+                <div class="theArea">
+                    <table  class="table">
+                        <thead>
+                            <tr style="color: aliceblue;">
+                                <th scope="col">Order id</th>
+                                <th scope="col">Details</th>
+                                <th scope="col">Date</th>
+                                
+                                <th scope="col">Payment Method</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Order Price</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Action</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each orderData}}
+                            <tr style="color: aliceblue;">
+                                <td>{{this.orderId}}</td>
+                                <td> <a style="background-color: rgb(165, 77, 77); border-color: aliceblue;" href="/admin/viewOrder?id={{this._id}}" class="btn btn-success">View
+                                        details</a> </td>
+                                <td>{{this.date}}</td>
+                                
+                                <td>
+                                    {{#iftrue this.payment_method 1}}
+                                    <h5 style="color: rgb(225, 45, 45);"  class="" >COD</h5>
+                                    {{/iftrue}}
+
+                                    {{#iftrue this.payment_method 2}}
+                                    <h5 style="color: blue;" class="" >UPI</h5>
+                                    {{/iftrue}}
+                                </td>
+                                <td>
+                                    {{#iftrue this.status "pending"}}
+                                    <h5 class="text-light">pending</h5>
+                                    {{/iftrue}}
+                                    {{#iftrue this.status "shipped"}}
+                                    <h5 style="color: cornflowerblue;" class="">Shipped</h5>
+                                    {{/iftrue}}
+                                    {{#iftrue this.status "delivered"}}
+                                    <h5 style="color: rgb(125, 225, 25);" class="">delivered</h5>
+                                    {{/iftrue}}
+                                    {{#iftrue this.status "cancelled"}}
+                                    <h5 class="text-danger">cancelled</h5>
+                                    {{/iftrue}}
+                                    {{#iftrue this.status "returned"}}
+                                    <h5 style="color: coral;" class="">Returned</h5>
+                                    {{/iftrue}}
+                                </td>
+                                <td>₹{{this.subtotal}}</td>
+                                <td>{{this.addressId}}</td>
+                                <td>
+                                    
+                                    {{#iftrue this.status "pending"}}
+                                    <a style="background-color: dodgerblue; border-color: aliceblue;" href="/admin/statusChange?id={{this._id}}" class="btn btn-warning" onclick="return confirm('Are you sure?')" >Ship Order</a>
+                                    {{/iftrue}}
+
+                                    {{#iftrue this.status "shipped"}}
+                                    <a style="background-color:rgb(49, 225, 0); border-color: aliceblue;" href="/admin/statusChange?id={{this._id}}" class="btn btn-primary" onclick="return confirm('Are you sure?')" >Deliver Order</a>
+                                    {{/iftrue}}
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

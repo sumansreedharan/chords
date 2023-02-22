@@ -1,0 +1,209 @@
+const User = require('../models/userModel');
+const { ObjectId } = require('mongodb');
+// const swal = require('sweetalert2');
+const Product = require('../models/productModel')
+const order = require('../models/payModel')
+const moment = require('moment')
+
+const loadusercart = async (req, res) => {
+   
+    try {
+        
+
+        const cartData = await User.aggregate([ 
+            { $match: { _id: ObjectId(req.session.user_id) } },
+            {
+                $lookup: {
+                    from: "products",
+                    let: { cartItems: "$cart" },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $in: ["$_id", "$$cartItems.productId"],
+                                }
+                            }
+                        }
+                    ],
+                    as: 'productcartData'
+                }
+            }
+        ]);
+        
+     
+        const cartProducts = cartData[0].productcartData
+        let subtotal = 0;
+        cartProducts.forEach((cartProduct) => {
+            subtotal = subtotal + Number(cartProduct.price);
+         });
+         
+     const length =  cartProducts.length
+        res.render('usercart',{cartProducts, subtotal , length,secnav:1});
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const addtocart = async (req, res) => {
+    try {
+        const cartData = await User.updateOne({ _id: req.session.user_id }, {
+            $addToSet: {
+                cart: { productId: req.query.id }
+            }
+        });
+        
+        res.redirect('/home');
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+const removeCartProduct = async (req, res) => {
+    try {
+        const result = await User.findByIdAndUpdate({_id: req.session.user_id }, {
+            $pull: {
+                cart: { productId: req.params.id }
+            }
+        });
+        res.json("success")
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+
+const userCheckout = async(req,res)=>{
+
+    try {
+        const address = await User.find({ _id: req.session.user_id }).lean();
+
+        const cartData = await User.aggregate([
+            { $match: { _id: ObjectId(req.session.user_id) } },
+            {
+                $lookup: {
+                    from: "products",
+                    let: { cartItems: "$cart" },
+                    pipeline: [ 
+                        {
+                            $match: {
+                                $expr: {
+                                    $in: ["$_id", "$$cartItems.productId"],
+                                },
+                            },
+                        },
+                    ],
+                    as: "Cartproducts",
+                },
+            },
+        ]);
+        let subtotal = 0;
+        const cartProducts = cartData[0].Cartproducts;
+        cartProducts.map((cartProduct, i) => {
+            cartProduct.quantity = req.body.quantity[i];
+            subtotal = subtotal + cartProduct.price * req.body.quantity[i];
+        });
+        res.render("user-checkout", {
+            productDetails: cartData[0].Cartproducts,
+            subtotal: subtotal,
+            address: address[0].Address,usernav:1
+        });
+    } catch (error) {
+        console.log(error.message);
+}
+
+}
+
+const addCheckoutAddress = async(req,res)=>{
+    try {
+        res.render('checkout-address')
+    } catch (error) {
+       console.log(error); 
+    }
+}
+
+const postCheckoutAddress = async(req,res)=>{
+    try {
+        const address = await User.findByIdAndUpdate({_id: req.session.user_id},{$addToSet:{address:req.body}})
+        res.redirect('/usercart')
+    } catch (error) {
+       console.log(error)
+ 
+    }
+}
+
+const placeOrder = async (req, res) => {
+    try {
+
+      const { productid,productname,payment,subtotal, price, quantity,addressId} = req.body;
+        const result = Math.random().toString(36).substring(2, 7);
+        const id = Math.floor(100000 + Math.random() * 900000);
+        const orderId = result + id;
+        
+
+        const today = moment();
+        today.format('MM/DD/YYYY');
+        // const datetime = new Date().toISOString();
+        const chordsecom =productid.map((item, i) => ({
+            id: productid[i],
+            name:productname[i],
+            price: price[i],
+            quantity: quantity[i]
+    
+        }));
+        let data = {
+          userId: ObjectId(req.session.user_id),
+          orderId: orderId,
+          date: today,
+          addressId: addressId,
+          product:chordsecom,
+          status: "pending",
+          payment_method: String(payment),
+          subtotal:subtotal,
+        };
+        console.log(data);
+   
+  
+   
+        const orderPlacement = await order.insertMany(data);
+        const clearCart= await  User.updateOne({
+        _id:req.session.user_id
+        },{$set:{
+          cart:[]
+        }})
+        quantity.map(async (item,i)=>{
+        const reduceStock=await Product.updateOne({_id:ObjectId(productid[i])},{
+        $inc:{
+        quantity:-Number(item)
+        }
+    })
+       })
+    
+        if(orderPlacement && clearCart){
+          res.json("success")
+        }else{
+          const handlePlacementissue = await order.deleteMany({ orderId: orderId,});
+         
+          res.json("try again")
+    
+        }
+    } catch (error) {
+      res.json("try again")
+  
+}
+  };
+
+
+
+
+module.exports={
+    loadusercart,
+    addtocart,
+    removeCartProduct,
+    userCheckout,
+    addCheckoutAddress,
+    postCheckoutAddress,
+    placeOrder,
+}

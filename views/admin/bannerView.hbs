@@ -1,0 +1,40 @@
+<body class="backimage" style="background-image: url(/img/0101.jpg); background-size: cover;">
+    <div class="container-fluid">
+        <div class="sub-container thehome">
+            <div class="p-3">
+                <h1 class="text-light">Banner Handling</h1>
+                <div class="p-3">
+                    <form class="d-flex">
+                        <a style="background-color: crimson; border-color: aliceblue;" href="/admin/addBanner" class="btn btn-success">Add your banner</a>
+                    </form>
+                </div>
+                <div class="theArea">
+                    <table class="table">
+                        <thead>
+                            <tr class="text-light">
+                                <th scope="col">Name</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each banner}}
+                            <tr>
+                                <td class="text-light">{{this.name}}</td>
+                                <td><img style="max-width: 18rem; height: auto;" src="/productImages/{{this.image}}" alt="..." class="img-fluid"></td>
+                                <td>
+                                    <a style="background-color: rgb(35, 42, 39);" href="/admin/editBanner?id={{this._id}}" class="btn btn-primary">Edit</a>
+                                    <br><br>
+                                    <a  href="/admin/removeBanner?id={{this._id}}" class="btn btn-danger"
+                                        onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

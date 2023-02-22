@@ -1,0 +1,291 @@
+/* user login */
+
+form {
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  input[type="submit"] {
+    width: 100%;
+    background-color: #202620;
+    color: white;
+    padding: 14px 20px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  /* user signup */
+
+  form {
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  input[type="text"], input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  input[type="submit"] {
+    width: 100%;
+    background-color: #d90000;
+    color: white;
+    padding: 14px 20px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .newacc{
+    float: right;
+  }
+  
+  /* forgot password */
+
+  form {
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  input[type="email"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  input[type="submit"] {
+    width: 100%;
+    background-color:#d90000;
+    color: white;
+    padding: 14px 20px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+
+
+/* edit profile user */
+
+body {
+  background: rgb(172, 6, 6)
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: #b91717
+}
+
+.profile-button {
+  background: rgb(171, 14, 14);
+  box-shadow: none;
+  border: none
+}
+
+.profile-button:hover {
+  background: #921313
+}
+
+.profile-button:focus {
+  background: #980c0c;
+  box-shadow: none
+}
+
+.profile-button:active {
+  background: #682773;
+  box-shadow: none
+}
+
+.back:hover {
+  color: #682773;
+  cursor: pointer
+}
+
+.labels {
+  font-size: 11px
+}
+
+.add-experience:hover {
+  background: #BA68C8;
+  color: #fff;
+  cursor: pointer;
+  border: solid 1px #BA68C8
+}
+
+/* usercart */
+
+@media (min-width: 1025px) {
+  .h-custom {
+  height: 100vh !important;
+  }
+  }
+  
+  .card-registration .select-input.form-control[readonly]:not([disabled]) {
+  font-size: 1rem;
+  line-height: 2.15;
+  padding-left: .75em;
+  padding-right: .75em;
+  }
+  
+  .card-registration .select-arrow {
+  top: 13px;
+  }
+  
+  .bg-grey {
+  background-color: #eae8e8;
+  }
+  
+  @media (min-width: 992px) {
+  .card-registration-2 .bg-grey {
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+  }
+  }
+  
+  @media (max-width: 991px) {
+  .card-registration-2 .bg-grey {
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  }
+  }
+
+  /* my order style */
+
+
+  .gradient-custom-2 {
+    /* fallback for old browsers */
+    background: #d70c0c;
+    
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgb(255, 0, 0), rgb(255, 60, 0));
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgb(186, 17, 17), rgb(158, 52, 52))
+    }
+    
+    #progressbar-1 {
+    color: #455A64;
+    }
+    
+    #progressbar-1 li {
+    list-style-type: none;
+    font-size: 13px;
+    width: 33.33%;
+    float: left;
+    position: relative;
+    }
+    
+    #progressbar-1 #step1:before {
+    content: "1";
+    color: #fff;
+    width: 29px;
+    margin-left: 22px;
+    padding-left: 11px;
+    }
+    
+    #progressbar-1 #step2:before {
+    content: "2";
+    color: #fff;
+    width: 29px;
+    }
+    
+    #progressbar-1 #step3:before {
+    content: "3";
+    color: #fff;
+    width: 29px;
+    margin-right: 22px;
+    text-align: center;
+    }
+    
+    #progressbar-1 li:before {
+    line-height: 29px;
+    display: block;
+    font-size: 12px;
+    background: #455A64;
+    border-radius: 50%;
+    margin: auto;
+    }
+    
+    #progressbar-1 li:after {
+    content: '';
+    width: 121%;
+    height: 2px;
+    background: #455A64;
+    position: absolute;
+    left: 0%;
+    right: 0%;
+    top: 15px;
+    z-index: -1;
+    }
+    
+    #progressbar-1 li:nth-child(2):after {
+    left: 50%
+    }
+    
+    #progressbar-1 li:nth-child(1):after {
+    left: 25%;
+    width: 121%
+    }
+    
+    #progressbar-1 li:nth-child(3):after {
+    left: 25%;
+    width: 50%;
+    }
+    
+    #progressbar-1 li.active:before,
+    #progressbar-1 li.active:after {
+    background: #1266f1;
+    }
+    
+    .card-stepper {
+    z-index: 0
+    }
+
+  
+
+
+
+
+
+

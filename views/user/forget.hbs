@@ -1,0 +1,19 @@
+<body class="backimage" style="background-image: url(/img/0101.jpg); background-size: cover;">
+<link rel="stylesheet"type="text/css" href="style/fullstyle.css">
+<div style="margin-top: 9em;">
+<form style="border-radius: 1em;" action="" method="post">
+  <label style="color: rgb(255, 255, 255);">Enter email</label>
+  <input type="email" id="mobile" name="email" placeholder=" Enter your email" required>
+  <br><br>
+  <input type="submit" value="Submit">
+  <h3>{{message}}</h3>
+</form>
+</div>
+<center><div class="w-50">
+{{#if message}}
+<div class="alert alert-success" role="alert"> {{message}}</div>
+{{else if error}}
+<div class="alert alert-danger" role="alert"> {{error}}</div>
+{{/if}}
+</div>						
+</body>

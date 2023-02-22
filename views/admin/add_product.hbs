@@ -1,0 +1,34 @@
+<body class="backimage" style="background-image: url(/img/1234.jpg);">
+    
+    <div class="container-fluid login-cont row" style="margin-top: 70px;">
+       
+     <center><div class="sub-container mt-5 p-5 w-50 bg-success p-2 text-dark bg-opacity-10 rounded">
+
+            <div class="inner w-50 " >
+                
+              <form  action="" method="post" enctype="multipart/form-data">
+                    <h2 class="text-center">Add Products</h2>
+                    <br>
+                    <input class="form-control" type="text" name="name" placeholder="enter product name" required>
+                    <br>
+                    <select class="form-select" aria-label="Category" type="text" name="category" placeholder="enter category" required>
+                        {{#each category}}
+                        <option>{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                    <br>
+                    <input class="form-control" type="text" name="price" placeholder="enter price" required>
+                    <br>
+                    <input class="form-control" type="text" name="description" placeholder="enter description" required>
+                    <br>
+                    <input type="file" name="image" multiple class="text-white">
+                    <br>
+                    <input class="form-control" type="text" name="quantity" placeholder="enter quantity" required>
+                    <br>
+                    <input type="submit" value="Add Product" class=" btn cust-btn mt-2 bg-primary">
+                  
+                </form> 
+            </div>
+        </div> </center>  
+    </div>
+</body>

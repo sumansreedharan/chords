@@ -1,0 +1,34 @@
+<body class="backimage" style="background-image: url(/img/1234.jpg);">
+    
+    <div class="container-fluid login-cont row" style="margin-top: 70px;">
+       
+     <center><div class="sub-container mt-5 p-5 w-50 bg-success p-2 text-dark bg-opacity-10 rounded">
+
+            <div class="inner w-50 " >
+                
+              <form  action="" method="post" enctype="multipart/form-data">
+                    <h2 class="text-center">Edit product</h2>
+                    <br>
+                    <input class="form-control" type="text" name="name" placeholder="enter product name" required value="{{product.name}}" >
+                    <br>
+                   <input class="form-control" type="text" name="category" placeholder="enter product name" required value="{{product.category}}" >
+                
+                    <br>
+                    <input class="form-control" type="text" name="price" placeholder="enter price" required value="{{product.price}}">
+                    <br>
+                    <input class="form-control" type="text" name="description" placeholder="enter description" required value="{{product.description}}">
+                    <br>
+                    <input type="file" name="image" multiple class="text-white" value="{{product.image.[0]}}">
+                    <br>
+                    <input type="hidden" name="id" value="{{product._id}}">
+                    
+                    <input type="text" name="quantity" class="stock" value="{{product.quantity}}" placeholder="enter quantity">
+
+                    {{!-- <img src="/productImages/{{product.image.[0]}}" alt=""> --}}
+                     
+                    <input type="submit" value="Edit" class=" btn cust-btn mt-2 bg-primary">
+                </form> 
+            </div>
+        </div> </center>  
+    </div>
+</body>
