@@ -1,102 +1,144 @@
 <br><br><br><br><br><br>
-    <div class="pageWrapper">
-        <!--Body Content-->
-        <div id="page-content">
-            <!--Page Title-->
-            <div class="page section-header text-center">
-                <div class="page-title">
-                    <div class="wrapper"></div>
-                </div>
+<div class="pageWrapper">
+    <!--Body Content-->
+    <div id="page-content">
+        <!--Page Title-->
+        <div class="page section-header text-center">
+            <div class="page-title">
+                <div class="wrapper"></div>
             </div>
-            <!--End Page Title-->
-            <div class="container">
-                <div class="row billing-fields">
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 sm-margin-30px-bottom">
-                        <div class="create-ac-content bg-light-gray padding-20px-all">
-                            <br><br>
-                            <h2>Deliver to:</h2>
-                            <br>
-                            <div class="row">
-                                <select class="form-select form-select-lg mb-3" id="addressform" onchange="addressValue()">
-                                    
-                                
-                                    {{#each address}}
-                                    <option {{_id}}>
-                                        <div class="col-md-6">
-                                            <div class="bg-white card addresses-item mb-4 border border-primary shadow">
-                                                <div class="gold-members p-4">
-                                                    <div class="media">
-                                                        <div class="mr-3"><i class="icofont-ui-home icofont-3x"></i>
-                                                        </div>
-                                                        <div class="media-body">
-                                                            <h6>{{deliver_to}}</h6>&nbsp
-                                                            <p>{{name}} &nbsp
-                                                                &nbsp<b>{{number}}</b>
-                                                            </p>
-                                                            <p>{{house}}</p>
-                                                            <p>{{city}}, {{state}}, {{country}}</p>
-                                                            <p>{{address}} - {{pincode}} </p>
-                                                        </div>
+        </div>
+        <!--End Page Title-->
+        <div class="container">
+            <div class="row billing-fields">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 sm-margin-30px-bottom">
+                    <div class="create-ac-content bg-light-gray padding-20px-all">
+                        <br><br>
+                        <h2>Deliver to:</h2>
+                        <br>
+                        <div class="row">
+                            <select class="form-select form-select-lg mb-3" id="addressform" onchange="addressValue()">
+
+
+                                {{#each address}}
+                                <option {{_id}}>
+                                    <div class="col-md-6">
+                                        <div class="bg-white card addresses-item mb-4 border border-primary shadow">
+                                            <div class="gold-members p-4">
+                                                <div class="media">
+                                                    <div class="mr-3"><i class="icofont-ui-home icofont-3x"></i>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h6>{{deliver_to}}</h6>&nbsp
+                                                        <p>{{name}} &nbsp
+                                                            &nbsp<b>{{number}}</b>
+                                                        </p>
+                                                        <p>{{house}}</p>
+                                                        <p>{{city}}, {{state}}, {{country}}</p>
+                                                        <p>{{address}} - {{pincode}} </p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </option>
-                                    {{/each}}
-                                </select>
+                                    </div>
+                                </option>
+                                {{/each}}
+                            </select>
 
-                                <input type="hidden" name="selectedAddress" id="addressform">
-                                <br>
-                                <div class="d-flex justify-content-left mb-2">
-                                    <a href="/checkout-address" class="btn btn-outline-dark"><strong>Add new
-                                            Address</strong></a>
-                                </div>
+                            <input type="hidden" name="selectedAddress" id="addressform">
+                            <br>
+                            <div class="d-flex justify-content-left mb-2">
+                                <a href="/checkout-address" class="btn btn-outline-dark"><strong>Add new
+                                        Address</strong></a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                        <div class="your-order-payment">
-                            <div class="your-order">
-                                <h2 class="order-title mb-4">Your Order</h2>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                    <div class="your-order-payment">
+                        <div class="your-order">
+                            <h2 class="order-title mb-4">Your Order</h2>
 
-                                <div class="table-responsive-sm order-table table-bordered">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Product Name</th>
-                                                <th scope="col">Quantiy</th>
-                                                <th scope="col">Price</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {{#each productDetails}}
-                                            <tr>
-                                                <th scope="row">{{this.name}}</th>
-                                                <td>{{this.quantity}}</td>
-                                                <td>{{this.price}}</td>
-                                                <input type="hidden" name="productid" value="{{this._id}}">
-                                                 <input type="hidden" name="productname" value="{{this.name}}">
-                                                  <input type="hidden" name="quantity" value="{{this.quantity}}">
-                                                   <input type="hidden" name="price" value="{{this.price}}">
-                                            </tr>
-                                            {{/each}}
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <td>Total</td>
-                                                <td></td>
-                                                <td>{{subtotal}}</td>
-                                                 <input type="hidden" id="subtotal" value="{{subtotal}}">
-                                            </tr>
-                                        </tfoot>
-                                    </table>
+                            <div class="table-responsive-sm order-table table-bordered">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Product Name</th>
+                                            <th scope="col">Quantiy</th>
+                                            <th scope="col">Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each productDetails}}
+                                        <tr>
+                                            <th scope="row">{{this.name}}</th>
+                                            <td>{{this.quantity}}</td>
+                                            <td>{{this.price}}</td>
+                                            <input type="hidden" name="productid" value="{{this._id}}">
+                                            <input type="hidden" name="productname" value="{{this.name}}">
+                                            <input type="hidden" name="quantity" value="{{this.quantity}}">
+                                            <input type="hidden" name="price" value="{{this.price}}">
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td>Total</td>
+                                            <td></td>
+                                            <td>{{subtotal}}</td>
+                                            <input type="hidden" id="subtotal" value="{{subtotal}}">
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="cccoupon">
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                Offer
+                                <h3 id="offer" class="fw-normal">{{offer}}</h3>
+                            </li>
+
+                            <li
+                                class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                                <div>
+                                    <strong>Total amount</strong>
+                                </div>
+                                <h3 id="famount" class="fw-normal">{{finalAmount}}</h3>
+                            </li>
+                            <div class="card mb-4">
+                                <div class="card-header py-3">
+                                    <h5 class="mb-0">Apply Promo Code</h5>
+                                </div>
+                                <div class="card-body">
+
+                                    <ul class="list-group list-group-flush">
+
+                                        <li
+                                            class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                                            Code
+                                            <input type="text" id="couponCode" name="coupon">
+                                            <br>
+                                        </li>
+                                        <br>
+                                    </ul>
+                                    <button class="btn the-userbutton btn-lg" onclick="checkCoupon()">
+                                        Apply Code
+                                    </button>
+                                    <span id="errorMessage"></span>
+
                                 </div>
                             </div>
+                        </div>
+
+                        <centre>
                             <hr>
-                            <div class="your-payment">
-                                <h2 class="payment-title mb-3">Payment Method</h2>
-                                <br><br>
-                                <div class="payment-method">
+                        </centre>
+                        
+                        <div class="your-payment">
+                            <h2 class="payment-title mb-3">Payment Method</h2>
+                            <br><br>
+                            <div class="payment-method">
                                 <div class="form-check">
                                     <input onclick="enableButton()" class="form-check-input" type="radio" name="payment"
                                         id="COD" value="1">
@@ -105,7 +147,7 @@
                                     </label>
                                     <div>
                                         <input onclick="enableButton()" class="form-check-input" type="radio"
-                                            name="payment"id="rzp-button1" value="2">
+                                            name="payment" id="rzp-button1" value="2">
                                         <label class="form-check-label" for="payment2">
                                             RazorPay
                                         </label>
@@ -113,12 +155,11 @@
                                 </div>
                                 <hr>
                                 <div class="order-button-payment">
-                                    <button class="btn" onclick="CheckplaceOrder()" value="Place order" id="placeOrderButton"
-                                        disabled>Place
+                                    <button class="btn" onclick="CheckplaceOrder()" value="Place order"
+                                        id="placeOrderButton" disabled>Place
                                         order</button>
                                 </div>
                                 <input type="hidden" name="radioValue">
-                            </div>
                             </div>
                         </div>
                     </div>
@@ -126,109 +167,153 @@
             </div>
         </div>
     </div>
+</div>
 
 </body>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
-let payment;
-let subtotal;
- subtotal = Number(document.getElementById('subtotal').value)
- let total = subtotal*100;
- async function enableButton() {
-            
+    let payment;
+    let subtotal;
+    subtotal = Number(document.getElementById('subtotal').value)
+    let finalAmount = Number(document.getElementById('famount').innerHTML)
+    let total = subtotal * 100;
+
+    const amount = document.getElementById("famount").innerHTML * 100
+
+
+      async function checkCoupon() {
+        console.log("256 check >>")
+        const coupon = document.getElementById('couponCode').value;
+        console.log(coupon)
+        let valCoupon = await fetch('/validateCoupon', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code: coupon }),
+        });
+        let response = await valCoupon.json()
+
+        if (response == "fail") {
+            document.getElementById("errorMessage").innerHTML = "Coupon Invalid";
+
+        } else if (response == "NOT") {
+            document.getElementById("errorMessage").innerHTML = "Coupon Not Found";
+        }
+        else {
+
+
+            let offer = document.getElementById("offer").innerHTML = Number(response)
+            console.log(Number(response))
+
+            let subtotal = document.getElementById('subtotal').value
+
+            let famount = document.getElementById('famount').innerHTML
+
+            const amt = Number(subtotal) * Number(offer) / 100
+
+            famount = famount - amt
+
+            document.getElementById('famount').innerHTML = famount
+
+        }
+    }
+
+
+    async function enableButton() {
+
         document.getElementById('placeOrderButton').disabled = false
 
     }
 
- async  function   CheckplaceOrder(){
-       payment=  Object.values(document.getElementsByName('payment')).filter((item) => item.checked ? item : '').map((item) => item.value)
-    if(payment[0]==='1'){
-        placeOrder();
-    }else{
-        var orderId;
-  subtotal = total
-  $(document).ready(function () {
-    
-    var settings = {
-      url: "/create/orderId",
-      method: "POST",
-      timeout: 0,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: JSON.stringify({
-        amount:subtotal, //CHANGE THE AMOUNT AS NEEDED
-      }),
-    };
+    async function CheckplaceOrder() {
+        payment = Object.values(document.getElementsByName('payment')).filter((item) => item.checked ? item : '').map((item) => item.value)
+        if (payment[0] === '1') {
+            placeOrder();
+        } else {
+            var orderId;
+            subtotal = total
+            $(document).ready(function () {
 
-    //creates new orderId everytime
-    $.ajax(settings).done(function (response) {
-      orderId = response.orderId;
-      console.log(orderId);
-    });
-  });
+                var settings = {
+                    url: "/create/orderId",
+                    method: "POST",
+                    timeout: 0,
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    data: JSON.stringify({
+                        amount: subtotal, //CHANGE THE AMOUNT AS NEEDED
+                    }),
+                };
 
-  document.getElementById("placeOrderButton").onclick = function (e) {
-    var options = {
-      key: "rzp_test_pChQvCOnHtlSse", // Enter the Key ID generated from the Dashboard
-      amount:subtotal, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-      currency: "INR",
-      name: "Chords",
-      description: "Test Transaction",
-      image: "https://example.com/your_logo",
-      order_id: orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-      handler: function (response) {
-        alert(response.razorpay_payment_id);
-        alert(response.razorpay_order_id);
-        alert(response.razorpay_signature);
-        var settings = {
-          url: "/api/payment/verify",
-          method: "POST",
-          timeout: 0,
-          headers: {
-            "Content-Type": "application/json",
-          },
-          data: JSON.stringify({ response }),
-        };
-console.log(response)
-        $.ajax(settings).done(function (response) {
-           placeOrder();
-          alert(JSON.stringify(response));
-        });
-      },
+                //creates new orderId everytime
+                $.ajax(settings).done(function (response) {
+                    orderId = response.orderId;
+                    console.log(orderId);
+                });
+            });
 
-      theme: {
-        color: "#0000FF",
-      },
-    };
-    var rzp1 = new Razorpay(options);
-    rzp1.on("payment.failed", function (response) {
-      alert(response.error.code);
-      alert(response.error.description);
-      alert(response.error.source);
-      alert(response.error.step);
-      alert(response.error.reason);
-      alert(response.error.metadata.order_id);
-      alert(response.error.metadata.payment_id);
-    });
-    rzp1.open();
-    e.preventDefault();
-  };
+            document.getElementById("placeOrderButton").onclick = function (e) {
+                var options = {
+                    key: "rzp_test_pChQvCOnHtlSse", // Enter the Key ID generated from the Dashboard
+                    amount: subtotal, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                    currency: "INR",
+                    name: "Chords",
+                    description: "Test Transaction",
+                    image: "https://example.com/your_logo",
+                    order_id: orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                    handler: function (response) {
+                        alert(response.razorpay_payment_id);
+                        alert(response.razorpay_order_id);
+                        alert(response.razorpay_signature);
+                        var settings = {
+                            url: "/api/payment/verify",
+                            method: "POST",
+                            timeout: 0,
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            data: JSON.stringify({ response }),
+                        };
+                        console.log(response)
+                        $.ajax(settings).done(function (response) {
+                            placeOrder();
+                            alert(JSON.stringify(response));
+                        });
+                    },
+
+                    theme: {
+                        color: "#0000FF",
+                    },
+                };
+                var rzp1 = new Razorpay(options);
+                rzp1.on("payment.failed", function (response) {
+                    alert(response.error.code);
+                    alert(response.error.description);
+                    alert(response.error.source);
+                    alert(response.error.step);
+                    alert(response.error.reason);
+                    alert(response.error.metadata.order_id);
+                    alert(response.error.metadata.payment_id);
+                });
+                rzp1.open();
+                e.preventDefault();
+            };
 
 
+        }
     }
- }
 
- async  function placeOrder() {
+    async function placeOrder() {
         const productid = Object.values(document.getElementsByName('productid')).map((item) => item.value)
         const productname = Object.values(document.getElementsByName('productname')).map((item) => item.value)
         const price = Object.values(document.getElementsByName('price')).map((item) => item.value)
         const quantity = Object.values(document.getElementsByName('quantity')).map((item) => item.value)
         const addressId = document.getElementById('addressform').value
-       const  payment=  Object.values(document.getElementsByName('payment')).filter((item) => item.checked ? item : '').map((item) => item.value)
-       
+        const payment = Object.values(document.getElementsByName('payment')).filter((item) => item.checked ? item : '').map((item) => item.value)
+        const coupon = document.getElementById('couponCode').value
 
-       
+
+
         let data = {
             productid: productid,
             productname: productname,
@@ -236,13 +321,14 @@ console.log(response)
             quantity: quantity,
             addressId: addressId,
             payment: payment,
-            subtotal:subtotal
-            
+            subtotal: subtotal,
+            coupon:coupon
+
         }
-      
-         
-         try {
-            let orderplacement = await fetch('/placeOrder',  {
+
+
+        try {
+            let orderplacement = await fetch('/placeOrder', {
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json',
@@ -277,8 +363,8 @@ console.log(response)
         } catch (error) {
             console.log(error)
         }
-     
-       
+
+
 
     }
 

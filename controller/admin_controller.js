@@ -12,6 +12,7 @@ const randomstring = require("randomstring");
 const session = require('express-session');
 const { log } = require('handlebars');
 const { ObjectID } = require('bson');
+const { findByIdAndUpdate } = require('../models/adminModel');
 const popup = require = ("node-popup")
 
 
@@ -523,11 +524,56 @@ const couponManage = async(req,res)=>{
 
 const addCoupon = async(req,res)=>{
     try {
-       res.render('add-coupon') 
+       res.render('add-coupon',{admin:1}) 
     } catch (error) {
       console.log(error.message)  
     }
 }
+
+const pushCoupon = async(req,res)=>{
+    try {
+        const coupon = new Coupon({
+            name:req.body.name,
+            offer:req.body.offer,
+            status:"Active"
+        })
+        
+        const couponData = await coupon.save()
+        if(couponData){
+            res.redirect('/admin/couponView')
+        }else{
+            res.render('add-coupon')
+        }
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const popCoupon = async(req,res)=>{
+    try {
+        const id = req.query.id
+        const couponData = await Coupon.findOne({_id:id})
+        if(couponData.status === "Active"){
+            const removeCoupon = await Coupon.findOneAndUpdate({_id:id},{
+                $set:{
+                    status:"Inactive"
+                }
+            })
+        }else if(couponData.status === "Inactive"){
+            const updateCoupon = await Coupon.findOneAndUpdate({_id:id},{
+                $set:{
+                    status:"Active"
+                }
+            })
+        }
+        res.redirect('/admin/couponView')
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+
 
 module.exports = {
     adminlogin,
@@ -563,6 +609,9 @@ module.exports = {
     removeBanner,
     couponManage,
     addCoupon,
+    pushCoupon,
+    popCoupon,
+    
 
 
 

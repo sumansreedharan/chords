@@ -27,9 +27,9 @@ const otp = generateOTP();
 
 //login page
 const loginPage = async (req, res) => {
-    
+
     try {
-        
+
         res.render('login');
     } catch (error) {
         console.log(error.message);
@@ -47,7 +47,7 @@ const securePassword = async (password) => {
 }
 
 // for send mail
-const sendVerifyMail = async (name, email,user_id) => {
+const sendVerifyMail = async (name, email, user_id) => {
     try {
         const transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
@@ -118,8 +118,8 @@ const insertUser = async (req, res) => {
                 const userData = await user.save();
 
                 if (userData) {
-                    sendVerifyMail(req.body.name, req.body.email,userData._id);
-                    res.redirect('/userotpverify?id='+userData._id);
+                    sendVerifyMail(req.body.name, req.body.email, userData._id);
+                    res.redirect('/userotpverify?id=' + userData._id);
                 }
                 else {
                     res.render('signup', { error: "Your registration has been failed" });
@@ -141,7 +141,7 @@ const insertUser = async (req, res) => {
         console.log(error.message);
     }
 }
-const otpverification = async(req,res)=>{
+const otpverification = async (req, res) => {
     try {
         res.render('userotpverify')
     } catch (error) {
@@ -153,17 +153,17 @@ const otpverification = async(req,res)=>{
 const verifyMail = async (req, res) => {
 
     try {
-      
-    
-        const userData = await User.findOne({_id:req.query.id});
-       
+
+
+        const userData = await User.findOne({ _id: req.query.id });
+
         const enterotp = await req.body.otp;
         console.log(userData.token);
         console.log(enterotp);
         if (enterotp === userData.token) {
-           
+
             const otpcheck = await User.updateOne({
-                email:userData.email
+                email: userData.email
             }, {
                 $set: {
                     is_verified: 1
@@ -171,7 +171,7 @@ const verifyMail = async (req, res) => {
             });
             console.log(otpcheck);
             res.render('login')
-           
+
         } else {
             res.render('userotpverify', {
                 message: "invalid otp please check and retry"
@@ -324,17 +324,17 @@ const verifyLogin = async (req, res, next) => {
                 if (userData.is_verified === 0) {
 
                     res.render('login', {
-                        
+
                         error: "please verify your mail.",
                     })
 
                 } else {
                     if (userData.blocked) {
                         res.render('login', {
-                           
+
                             error: "Temporarily blocked by admin.",
                         })
-                    }else{
+                    } else {
                         req.session.user_id = userData._id
                         // console.log(req.session.user_id);
                         // res.render('home', {usernav:1,
@@ -342,27 +342,27 @@ const verifyLogin = async (req, res, next) => {
                         // });
                         res.redirect('/home')
                     }
-                     
-                    
-                    
+
+
+
                 }
             } else {
                 res.render('login', {
-                    
+
                     error: "email or  password is incorrect"
                 })
             }
 
         } else {
             res.render('login', {
-                
+
                 error: "email or  password is incorrect"
             })
         }
 
     } catch (error) {
         console.log(error)
-}
+    }
 
 }
 
@@ -375,26 +375,26 @@ const loadhome = async (req, res) => {
         console.log(req.session.user_id);
         const bannerData = await Banner.find();
         const categories = await (await headerData()).categories;
-        const productData = await Product.find({is_deleted:false })
-             
+        const productData = await Product.find({ is_deleted: false })
 
-        if(req.session.user_id){ res.render('home'/*,{user:userData}*/ ,{userlog:1,product:productData,banner:bannerData,categories:categories})}
+
+        if (req.session.user_id) { res.render('home'/*,{user:userData}*/, { userlog: 1, product: productData, banner: bannerData, categories: categories }) }
         // const userData = await User.findById({ _id: req.session.user_id });
-       else{
-        res.render('home',{usernav:1,product:productData,banner:bannerData})
-       }
+        else {
+            res.render('home', { usernav: 1, product: productData, banner: bannerData })
+        }
     } catch (error) {
         console.log(error.message);
     }
 }
 
-const productview = async(req,res) =>{
+const productview = async (req, res) => {
     try {
-        
+
         const id = req.query.id;
-        const productData = await Product.findById({_id:id})
+        const productData = await Product.findById({ _id: id })
         console.log(productData);
-        res.render('productview',{product:productData, userlog:1})
+        res.render('productview', { product: productData, userlog: 1 })
     } catch (error) {
         console.log(error.message);
     }
@@ -404,37 +404,37 @@ const userLogout = async (req, res) => {
 
 
     try {
-       req.session.destroy();
+        req.session.destroy();
         res.redirect('/');
     } catch (error) {
         console.log(error.message);
-}
-}
-
-const userProfile = async(req,res) =>{
-    try {
-     const userData = await User.findOne({_id:req.session.user_id})
-        res.render('userProfile',{user:userData, address:userData.Address,userlog:1})
-    } catch (error) {
-       console.log(error.message); 
     }
 }
 
-const edituserprofile = async(req,res)=>{
+const userProfile = async (req, res) => {
     try {
-        const userdata = await User.findOne({_id:req.session.user_id})
-        res.render('userEdit',{user:userdata,secnav:1})
+        const userData = await User.findOne({ _id: req.session.user_id })
+        res.render('userProfile', { user: userData, address: userData.Address, userlog: 1 })
     } catch (error) {
-       console.log(error.message);
-     
+        console.log(error.message);
+    }
+}
+
+const edituserprofile = async (req, res) => {
+    try {
+        const userdata = await User.findOne({ _id: req.session.user_id })
+        res.render('userEdit', { user: userdata, secnav: 1 })
+    } catch (error) {
+        console.log(error.message);
+
     }
 }
 
 const updateProfile = async (req, res) => {
     try {
-            
+
         const userdata = await User.updateOne({ _id: req.session.user_id }, {
-            
+
             $set: {
                 name: req.body.name,
                 email: req.body.email,
@@ -444,10 +444,10 @@ const updateProfile = async (req, res) => {
         res.redirect('/userEdit');
     } catch (error) {
         console.log(error.message);
-}
+    }
 }
 
-const loaduseraddress = async(req,res)=>{
+const loaduseraddress = async (req, res) => {
     try {
         res.render('editadress')
     } catch (error) {
@@ -456,10 +456,10 @@ const loaduseraddress = async(req,res)=>{
     }
 }
 
-const pushAddress = async (req,res) => {
+const pushAddress = async (req, res) => {
     try {
-      const address = await User.findOneAndUpdate({_id:req.session.user_id},{$addToSet:{Address:req.body}})
-      res.redirect('/userProfile')  
+        const address = await User.findOneAndUpdate({ _id: req.session.user_id }, { $addToSet: { Address: req.body } })
+        res.redirect('/userProfile')
     } catch (error) {
         console.log(error.message);
     }
@@ -480,19 +480,20 @@ const popaddress = async (req, res) => {
     }
 }
 
-const categoryList = async(req,res)=>{
+const categoryList = async (req, res) => {
     try {
+
         const categoryData = await Category.find({})
-        res.render('shop-list',{category:categoryData,userlog:1})
+        res.render('shop-list', { category: categoryData, userlog: 1 })
     } catch (error) {
-       console.log(error.message); 
+        console.log(error.message);
     }
 }
 
-const viewProducts = async (req,res)=>{
+const viewProducts = async (req, res) => {
     try {
-        const productData = await Product.find({category:req.query.categoryname,is_deleted: false})
-        res.render('viewProducts',{Product:productData,userlog:1,})
+        const productData = await Product.find({ category: req.query.categoryname, is_deleted: false })
+        res.render('viewProducts', { Product: productData, userlog: 1, })
     } catch (error) {
         console.log(error.message);
     }
@@ -513,7 +514,7 @@ module.exports = {
     forgetPasswordLoad,
     resetPassword,
     loadhome,
-    otpverification,  
+    otpverification,
     productview,
     userLogout,
     userProfile,
@@ -524,9 +525,9 @@ module.exports = {
     popaddress,
     categoryList,
     viewProducts,
-    
 
-    
-    
-    
+
+
+
+
 }

@@ -97,6 +97,8 @@ userRoute.get('/categoryList',confirm.isLogin,userController.categoryList)
 
 userRoute.get('/viewProducts',confirm.isLogin,userController.viewProducts)
 
+userRoute.post('/validateCoupon',cartcontroller.validateCoupon)
+
 
 
 

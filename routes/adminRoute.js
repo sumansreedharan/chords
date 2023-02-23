@@ -80,6 +80,8 @@ adminRoute.get('/removeBanner',confirm.isLoginAdmin,adminController.removeBanner
 
 adminRoute.get('/couponView',adminController.couponManage)
 adminRoute.get('/add-coupon',adminController.addCoupon)
+adminRoute.post('/add-coupon',adminController.pushCoupon)
+adminRoute.get('/delete-coupon',adminController.popCoupon)
 
 
 

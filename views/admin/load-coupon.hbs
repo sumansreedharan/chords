@@ -1,4 +1,4 @@
-<body class="backimage" style="background-image: url(/img/0101.jpg); background-size: cover;">
+<body style="background-color: rgb(46, 41, 41);">
 <div class="container-fluid">
     <div class="sub-container thehome">
         <div class="p-3">
@@ -20,18 +20,18 @@
                     </thead>
                     <tbody>
                         {{#each coupon}}
-                        <tr>
+                        <tr class="text-light">
                             <td>{{this.name}}</td>
                             <td>{{this.offer}}%</td>
                             <td>{{this.status}}</td>
                             <td>
                                 {{#iftrue this.status "Active"}}
-                                <a href="/admin/deletecoupon?id={{this._id}}" class="btn btn-danger"
-                                    data-bs-toggle="modal" data-bs-target="#exampleModal{{@index}}">Deactivate</a>
+                                <a href="/admin/delete-coupon?id={{this._id}}" class="btn btn-danger">Deactivate</a>
+                                    {{!-- data-bs-toggle="modal" data-bs-target="#exampleModal{{@index}}">Deactivate</a> --}}
                                 {{/iftrue}}
 
                                 {{#iftrue this.status "Inactive"}}
-                                <a href="/admin/restorecoupon?id={{this._id}}" class="btn btn-success">Activate</a>
+                                <a href="/admin/delete-coupon?id={{this._id}}" class="btn btn-success">Activate</a>
                                 {{/iftrue}}
                             </td>
 
@@ -52,7 +52,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Close</button>
-                                        <a href="/admin/deletecoupon?id={{this._id}}"><button type="button"
+                                        <a href="/admin/delete-coupon?id={{this._id}}"><button type="button"
                                                 class="btn btn-danger">Deactivate</button></a>
 
                                     </div>
