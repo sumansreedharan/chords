@@ -182,7 +182,7 @@ const placeOrder = async (req, res) => {
         
 
         const today = moment();
-        today.format('MM/DD/YYYY');
+        const date = today.format('DD-MM-YYYY');
         const chordsecom =productid.map((item, i) => ({
             id: productid[i],
             name:productname[i],
@@ -207,7 +207,7 @@ const placeOrder = async (req, res) => {
         let data = {
           userId: ObjectId(req.session.user_id),
           orderId: orderId,
-          date: today,
+          date: date,
           addressId: addressId,
           product:chordsecom,
           status: "pending",

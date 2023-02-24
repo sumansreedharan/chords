@@ -99,6 +99,8 @@ userRoute.get('/viewProducts',confirm.isLogin,userController.viewProducts)
 
 userRoute.post('/validateCoupon',cartcontroller.validateCoupon)
 
+userRoute.get('/invoice',payController.userInvoice)
+
 
 
 

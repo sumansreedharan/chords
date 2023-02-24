@@ -378,10 +378,10 @@ const loadhome = async (req, res) => {
         const productData = await Product.find({ is_deleted: false })
 
 
-        if (req.session.user_id) { res.render('home'/*,{user:userData}*/, { userlog: 1, product: productData, banner: bannerData, categories: categories }) }
+        if (req.session.user_id) { res.render('home'/*,{user:userData}*/, { userlog: 1, product: productData, banner: bannerData, categories: categories,usefooter:1 }) }
         // const userData = await User.findById({ _id: req.session.user_id });
         else {
-            res.render('home', { usernav: 1, product: productData, banner: bannerData })
+            res.render('home', { usernav: 1, product: productData, banner: bannerData,usefooter:1 })
         }
     } catch (error) {
         console.log(error.message);
@@ -449,7 +449,7 @@ const updateProfile = async (req, res) => {
 
 const loaduseraddress = async (req, res) => {
     try {
-        res.render('editadress')
+        res.render('editadress',{secnav:1})
     } catch (error) {
         console.log(error.message);
 
