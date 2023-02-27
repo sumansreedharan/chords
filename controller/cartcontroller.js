@@ -39,7 +39,7 @@ const loadusercart = async (req, res) => {
          });
          
      const length =  cartProducts.length
-        res.render('usercart',{cartProducts, subtotal , length,secnav: 1});
+        res.render('usercart',{cartProducts, subtotal , length,secnav: 1,usefooter:1});
     } catch (error) {
         console.log(error);
     }
@@ -114,7 +114,7 @@ const userCheckout = async(req,res)=>{
             subtotal: subtotal,
             finalAmount:subtotal,
             offer:0,
-            address: address[0].Address,usernav:1
+            address: address[0].Address,usernav:1,usefooter:1
         });
     } catch (error) {
         console.log(error.message);
@@ -168,7 +168,7 @@ const postCheckoutAddress = async(req,res)=>{
     }
 }
 
-let sumTotal;
+let sumTotal=0;
 let fCoupon;
 let fCouponAmount;
 
@@ -176,13 +176,13 @@ const placeOrder = async (req, res) => {
     try {
 
       const { productid,productname,payment,subtotal, price, quantity,addressId} = req.body;
+      console.log(req.body, " req");
         const result = Math.random().toString(36).substring(2, 7);
         const id = Math.floor(100000 + Math.random() * 900000);
         const orderId = result + id;
-        
-
+        sumTotal = subtotal;
         const today = moment();
-        const date = today.format('DD-MM-YYYY');
+        const date = today.format('MM/DD/YYYY');
         const chordsecom =productid.map((item, i) => ({
             id: productid[i],
             name:productname[i],
@@ -212,7 +212,7 @@ const placeOrder = async (req, res) => {
           product:chordsecom,
           status: "pending",
           payment_method: String(payment),
-          subtotal:subtotal,
+          subtotal: Number(sumTotal)
         };
         console.log(data);
    

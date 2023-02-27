@@ -83,6 +83,8 @@ adminRoute.get('/add-coupon',adminController.addCoupon)
 adminRoute.post('/add-coupon',adminController.pushCoupon)
 adminRoute.get('/delete-coupon',adminController.popCoupon)
 
+adminRoute.get('/salesReports',adminController.salesReports)
+
 
 
 

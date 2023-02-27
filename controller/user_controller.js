@@ -6,9 +6,6 @@ const Category = require('../models/categoryModel')
 const headerData = require('../middleware/passingData')
 const bcrypt = require('bcrypt');
 const nodemailer = require("nodemailer");
-
-// const crypto = require('crypto')
-
 const config = require("../config/config");
 
 const randomstring = require("randomstring");
@@ -414,7 +411,7 @@ const userLogout = async (req, res) => {
 const userProfile = async (req, res) => {
     try {
         const userData = await User.findOne({ _id: req.session.user_id })
-        res.render('userProfile', { user: userData, address: userData.Address, userlog: 1 })
+        res.render('userProfile', { user: userData, address: userData.Address, userlog: 1,usefooter:1})
     } catch (error) {
         console.log(error.message);
     }

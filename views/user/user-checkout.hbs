@@ -170,18 +170,22 @@
 </div>
 
 </body>
+
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
+    let finalPriceAmount
     let payment;
     let subtotal;
     subtotal = Number(document.getElementById('subtotal').value)
-    let finalAmount = Number(document.getElementById('famount').innerHTML)
-    let total = subtotal * 100;
+    {{!-- let finalAmount = Number(document.getElementById('famount').innerHTML) --}}
+    {{!-- let total = subtotal * 100; --}}
+     finalPriceAmount = subtotal;
 
-    const amount = document.getElementById("famount").innerHTML * 100
+    {{!-- const amount = document.getElementById("famount").innerHTML * 100 --}}
 
 
       async function checkCoupon() {
+
         console.log("256 check >>")
         const coupon = document.getElementById('couponCode').value;
         console.log(coupon)
@@ -212,6 +216,8 @@
 
             famount = famount - amt
 
+            finalPriceAmount = famount
+
             document.getElementById('famount').innerHTML = famount
 
         }
@@ -230,7 +236,7 @@
             placeOrder();
         } else {
             var orderId;
-            subtotal = total
+            {{!-- subtotal = total --}}
             $(document).ready(function () {
 
                 var settings = {
@@ -241,7 +247,8 @@
                         "Content-Type": "application/json",
                     },
                     data: JSON.stringify({
-                        amount: subtotal, //CHANGE THE AMOUNT AS NEEDED
+                        {{!-- amount: subtotal, //CHANGE THE AMOUNT AS NEEDED --}}
+                        amount:finalPriceAmount
                     }),
                 };
 
@@ -255,7 +262,7 @@
             document.getElementById("placeOrderButton").onclick = function (e) {
                 var options = {
                     key: "rzp_test_pChQvCOnHtlSse", // Enter the Key ID generated from the Dashboard
-                    amount: subtotal, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                    amount: finalPriceAmount*100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
                     currency: "INR",
                     name: "Chords",
                     description: "Test Transaction",
@@ -277,7 +284,7 @@
                         console.log(response)
                         $.ajax(settings).done(function (response) {
                             placeOrder();
-                            alert(JSON.stringify(response));
+                            {{!-- alert(JSON.stringify(response)); --}}
                         });
                     },
 
@@ -310,6 +317,7 @@
         const quantity = Object.values(document.getElementsByName('quantity')).map((item) => item.value)
         const addressId = document.getElementById('addressform').value
         const payment = Object.values(document.getElementsByName('payment')).filter((item) => item.checked ? item : '').map((item) => item.value)
+        const subtotal = document.getElementById('subtotal').value
         const coupon = document.getElementById('couponCode').value
 
 

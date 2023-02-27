@@ -22,7 +22,7 @@
             {{!-- <p class="text-muted mb-1">Full Stack Developer</p>
             <p class="text-muted mb-4">Bay Area, San Francisco, CA</p> --}}
             <div class="d-flex justify-content-center mb-2">
-              {{!-- <button type="button" class="btn btn-primary">Logout</button>     --}}   <a href="/login"><button type="button" class="btn btn-danger">Logout</button></a>
+              {{!-- <button type="button" class="btn btn-primary">Logout</button>     --}}   <a href="/login"><button type="button" class="btn btn-secondary">Logout</button></a>
               {{!-- <button type="button" class="btn btn-outline-primary ms-1">Message</button> --}}
             </div>
           </div>
@@ -51,14 +51,14 @@
                 <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
                 <p class="mb-0">mdbootstrap</p>
               </li> --}}
-               <button type="button" class="btn btn-danger"><a href="myOrder" class="text-white">Your Orders</a></button>
+               <button type="button" class="btn btn-secondary"><a href="myOrder" class="text-white">Your Orders</a></button>
                <br>
-                <button type="button" class="btn btn-danger">Your wishlist</button>
+                <button type="button" class="btn btn-secondary">Your wishlist</button>
                 <br>
-                 <button type="button" class="btn btn-danger"><a href="usercart" class="text-white">Your cart</a></button>
+                 <button type="button" class="btn btn-secondary"><a href="usercart" class="text-white">Your cart</a></button>
                  <br>
                   {{!-- <button type="button" class="btn btn-primary">Edit profile</button> --}}
-                   <button type="button" class="btn btn-danger text-white"> <a href="/userEdit" class="text-white">Edit profile </a></button>
+                   <button type="button" class="btn btn-secondary text-white"> <a href="/userEdit" class="text-white">Edit profile </a></button>
             </ul>
           </div>
         </div>
@@ -87,7 +87,7 @@
                                                 <p>{{house}}</p>
                                                 <p>{{city}}, {{state}}, {{country}}</p>
                                                 <p>{{address}} - {{pincode}} </p>
-                                                <a class="btn btn-danger" href="/popaddress?id={{this._id}}"
+                                                <a class="btn btn-secondary" href="/popaddress?id={{this._id}}"
                                                     onclick="return confirm('Are You Sure ?')">DELETE</a>
                                                 {{!-- <a class="btn btn-primary" href="/editaddress?id={{this._id}}">EDIT</a> --}}
                                             </div>

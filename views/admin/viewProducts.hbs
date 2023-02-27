@@ -1,18 +1,19 @@
 
 
-<body>
+<body style="background-color: rgb(46, 41, 41);">
     <div class="container-fluid">
         <div class="sub-container thehome">
             <div class="p-3">
-                <h1 class="thenewarrival"> Users Ordered Products</h1>
+                <h1 class="text-light"> Users Ordered Products</h1>
                 <div class="theArea">
                     <table class="table">
                         <thead>
-                            <tr>
-                                <th scope="col">Address</th>
+                            <tr style="color: aliceblue;">
+                                {{!-- <th scope="col">Address</th> --}}
                                 <th scope="col">Product name</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Price</th>
+                                <th scope="col">Product id</th>
                                 
                                 
                             </tr>
@@ -21,11 +22,12 @@
                             {{#each order}}
 
                             {{#each product}}
-                            <tr>
-                                <td>{{../addressId}}</td>
-                                <td>{{name}}</td>
-                                <td>{{quantity}}</td>
-                                <td>₹{{price}}</td>            
+                            <tr style="color:aliceblue ;">
+                                {{!-- <td>{{../addressId}}</td> --}}
+                                <td><strong>{{name}}</strong></td>
+                                <td><strong>{{quantity}}</strong></td>
+                                <td><strong>₹{{price}}</strong></td>  
+                                <td><strong>{{id}}</strong></td>          
                             </tr>
                             {{/each}}
 

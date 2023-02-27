@@ -43,6 +43,14 @@
                                     {{#iftrue ../status "returned"}}
                                     <h5 style="color: coral;" class="">Returned</h5>
                                     {{/iftrue}}
+                                    
+                                    		{{#iftrue ../payment_method 1}}
+												<h5 style="color: rgb(147, 15, 15);" class="">Payment via: COD</h5>
+												{{/iftrue}}
+
+												{{#iftrue ../payment_method 2}}
+												<h5 style="color: rgb(57, 57, 224);" class="">Payment Via: UPI</h5>
+												{{/iftrue}}
               </div>
               {{!-- <div>
                 <img class="align-self-center img-fluid"

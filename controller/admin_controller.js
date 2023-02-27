@@ -5,6 +5,7 @@ const Category = require('../models/categoryModel');
 const payment = require('../models/payModel');
 const Banner = require('../models/bannerModel');
 const Coupon = require('../models/couponModel')
+const moment = require("moment");
 const bcrypt = require('bcrypt');
 const nodemailer = require("nodemailer");
 const config = require("../config/config");
@@ -125,14 +126,72 @@ const addAdmin = async (req, res) => {
     }
 }
 
+// const adminhomeLoad = async (req, res) => {
+//     try {
+//         res.render('adminhome', { admin: 1, login: true })
+
+//     } catch (error) {
+//         console.log(error.message);
+//     }
+// }
+
+
 const adminhomeLoad = async (req, res) => {
+    const months = {};
+    const monthNames = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+    ];
+
     try {
-        res.render('adminhome', { admin: 1, login: true })
+        const orders = await payment.find({});
+        orders.forEach(function (order) {
+            var orderDate = new Date(order.date);
+            var month = monthNames[orderDate.getMonth()];
+            if (!months[month]) {
+                months[month] = 0;
+            }
+            months[month]++;
+        });
+
+        const users = await User.countDocuments({});
+        const orderCount = await payment.countDocuments({});
+        const productCount = await Product.countDocuments({});
+        const couponCount = await Coupon.countDocuments({});
+
+        const result = await payment.aggregate([
+            {
+                $group: {
+                    _id: {
+                        month: { $month: "$month" },
+                        year: { $year: "$year" }
+                    },
+                    count: { $sum: 1 },
+                },
+            },
+        ]);
+
+
+        res.render('adminhome', { months: months, result: result, admin: 1,login:true, users: users, orderCount: orderCount, productCount: productCount, couponCount: couponCount });
 
     } catch (error) {
         console.log(error.message);
     }
-}
+};
+
+
+
+
 
 const addProductManagement = async (req, res) => {
     try {
@@ -166,7 +225,7 @@ const insertProduct = async (req, res) => {
             price: req.body.price,
             description: req.body.description,
             image: Images,
-            quantity:req.body.quantity
+            quantity: req.body.quantity
         })
         const productData = await product.save();
         res.redirect('/admin/products')
@@ -190,31 +249,31 @@ const editProduct = async (req, res) => {
 
 
 
-const updateproduct = async(req,res,next)=>{
+const updateproduct = async (req, res, next) => {
     try {
         const id = req.body.id
-        if(req.file){
+        if (req.file) {
             const productData = await Product.findByIdAndUpdate({
-                _id:id
-            },{
-                $set:{
-                    name:req.body.name,
-                    category:req.body.category,
-                    price:req.body.description,
-                    quantity:req.body.quantity,
-                    image:req.file.filename
+                _id: id
+            }, {
+                $set: {
+                    name: req.body.name,
+                    category: req.body.category,
+                    price: req.body.description,
+                    quantity: req.body.quantity,
+                    image: req.file.filename
                 }
             })
-        } else{
+        } else {
             const productData = await Product.findByIdAndUpdate({
-                _id:id
-            },{
-                $set:{
+                _id: id
+            }, {
+                $set: {
                     name: req.body.name,
-                    category:req.body.category,
-                    price:req.body.price,
-                    description:req.body.description,
-                    quantity:req.body.quantity,
+                    category: req.body.category,
+                    price: req.body.price,
+                    description: req.body.description,
+                    quantity: req.body.quantity,
                 }
             })
         }
@@ -340,8 +399,9 @@ const editCategory = async (req, res) => {
 
     try {
         const id = req.query.id
-        const categoryData = await Category.findById({ 
-            _id: id })
+        const categoryData = await Category.findById({
+            _id: id
+        })
         res.render('edit_category', { category: categoryData, admin: 1 });
 
     } catch (error) {
@@ -404,39 +464,39 @@ const loadCategory = async (req, res) => {
 }
 
 
-const userOrder = async (req,res) =>{
+const userOrder = async (req, res) => {
     try {
         const orderData = await payment.find({}).lean()
-        res.render('userOrder',{orderData:orderData,admin:1})
+        res.render('userOrder', { orderData: orderData, admin: 1 })
     } catch (error) {
         console.log(error.message);
     }
 }
 
-const viewOrders = async (req,res) =>{
+const viewOrders = async (req, res) => {
     try {
-        const orderData = await payment.find({_id:ObjectID(req.query.id)})
-        res.render('viewProducts',{order:orderData,admin:1})
+        const orderData = await payment.find({ _id: ObjectID(req.query.id) })
+        res.render('viewProducts', { order: orderData, admin: 1 })
     } catch (error) {
         console.log(error.message);
     }
 }
 
 
-const changeStatus = async (req,res) =>{
+const changeStatus = async (req, res) => {
     try {
         const id = req.query.id;
-        const orderData = await payment.findOne({_id:id})
-        if(orderData.status === "pending"){
-            const shipped = await payment.findOneAndUpdate({_id:id},{
-                $set:{
-                    status:"shipped"
+        const orderData = await payment.findOne({ _id: id })
+        if (orderData.status === "pending") {
+            const shipped = await payment.findOneAndUpdate({ _id: id }, {
+                $set: {
+                    status: "shipped"
                 }
             })
-        } else if(orderData.status === "shipped"){
-            const delivered = await payment.findOneAndUpdate({_id:id},{
-                $set:{
-                    status:"delivered"
+        } else if (orderData.status === "shipped") {
+            const delivered = await payment.findOneAndUpdate({ _id: id }, {
+                $set: {
+                    status: "delivered"
                 }
             })
         }
@@ -446,102 +506,102 @@ const changeStatus = async (req,res) =>{
     }
 }
 
-const pushBanner = async(req,res)=>{
+const pushBanner = async (req, res) => {
     try {
         const bannerData = await Banner.find({})
         console.log(bannerData);
-        res.render('bannerView',{banner:bannerData,admin:1})
+        res.render('bannerView', { banner: bannerData, admin: 1 })
     } catch (error) {
-      console.log(error.message);  
+        console.log(error.message);
     }
 }
 
-const addBanner = async(req,res)=>{
+const addBanner = async (req, res) => {
     try {
         res.render('bannerManage')
     } catch (error) {
-      console.log(error.message)  
+        console.log(error.message)
     }
 }
 
-const postBanner = async(req,res)=>{
+const postBanner = async (req, res) => {
     try {
         const banner = new Banner({
-            name:req.body.name,
-            image:req.file.filename,
+            name: req.body.name,
+            image: req.file.filename,
         })
-       const bannerData = await banner.save() 
+        const bannerData = await banner.save()
         res.redirect('/admin/bannerView')
     } catch (error) {
         console.log(error.message)
     }
 }
 
-const editBanner = async(req,res)=>{
+const editBanner = async (req, res) => {
     try {
-      const id = req.query.id
-      const bannerData = await Banner.findById({_id:id}) 
-      res.render('editBanner',{banner:bannerData})
+        const id = req.query.id
+        const bannerData = await Banner.findById({ _id: id })
+        res.render('editBanner', { banner: bannerData })
     } catch (error) {
-       console.log(error.message) 
+        console.log(error.message)
     }
 }
 
-const patchBanner = async(req,res)=>{
+const patchBanner = async (req, res) => {
     try {
         const id = req.query.id
-        const bannerData = await Banner.findByIdAndUpdate({_id:id},{
-            $set:{
-                     name:req.body.name,
-                     image:req.file.filename
+        const bannerData = await Banner.findByIdAndUpdate({ _id: id }, {
+            $set: {
+                name: req.body.name,
+                image: req.file.filename
 
             }
         })
         res.redirect('/admin/bannerView')
     } catch (error) {
-       console.log(error.message); 
+        console.log(error.message);
     }
 }
 
-const removeBanner = async(req,res)=>{
+const removeBanner = async (req, res) => {
     try {
-       const id = req.query.id;
-       const bannerData = await Banner.deleteOne({_id:id}) 
-       res.redirect('/admin/bannerView')
+        const id = req.query.id;
+        const bannerData = await Banner.deleteOne({ _id: id })
+        res.redirect('/admin/bannerView')
     } catch (error) {
-       console.log(error.message) 
+        console.log(error.message)
     }
 }
 
-const couponManage = async(req,res)=>{
+const couponManage = async (req, res) => {
     try {
-       const couponData = await Coupon.find({}) 
-       res.render('load-coupon',{coupon:couponData,admin:1})
+        const couponData = await Coupon.find({})
+        res.render('load-coupon', { coupon: couponData, admin: 1 })
     } catch (error) {
         console.log(error.message);
     }
 }
 
-const addCoupon = async(req,res)=>{
+const addCoupon = async (req, res) => {
     try {
-       res.render('add-coupon',{admin:1}) 
+        res.render('add-coupon', { admin: 1 })
     } catch (error) {
-      console.log(error.message)  
+        console.log(error.message)
     }
 }
 
-const pushCoupon = async(req,res)=>{
+const pushCoupon = async (req, res) => {
     try {
         const coupon = new Coupon({
-            name:req.body.name,
-            offer:req.body.offer,
-            status:"Active"
+            name: req.body.name,
+            offer: req.body.offer,
+            status: "Active"
         })
-        
+
         const couponData = await coupon.save()
-        if(couponData){
+        if (couponData) {
             res.redirect('/admin/couponView')
-        }else{
+        } else {
             res.render('add-coupon')
         }
 
@@ -550,20 +610,20 @@ const pushCoupon = async(req,res)=>{
     }
 }
 
-const popCoupon = async(req,res)=>{
+const popCoupon = async (req, res) => {
     try {
         const id = req.query.id
-        const couponData = await Coupon.findOne({_id:id})
-        if(couponData.status === "Active"){
-            const removeCoupon = await Coupon.findOneAndUpdate({_id:id},{
-                $set:{
-                    status:"Inactive"
+        const couponData = await Coupon.findOne({ _id: id })
+        if (couponData.status === "Active") {
+            const removeCoupon = await Coupon.findOneAndUpdate({ _id: id }, {
+                $set: {
+                    status: "Inactive"
                 }
             })
-        }else if(couponData.status === "Inactive"){
-            const updateCoupon = await Coupon.findOneAndUpdate({_id:id},{
-                $set:{
-                    status:"Active"
+        } else if (couponData.status === "Inactive") {
+            const updateCoupon = await Coupon.findOneAndUpdate({ _id: id }, {
+                $set: {
+                    status: "Active"
                 }
             })
         }
@@ -572,6 +632,45 @@ const popCoupon = async(req,res)=>{
         console.log(error.message);
     }
 }
+
+
+
+
+const salesReports = async(req,res) => {
+    try {
+
+        const orderdata = await payment.aggregate([
+            { $match: { status: "delivered" } },
+            {
+                $group: {
+                    _id: null,
+                    totalSales: { $sum: "$subtotal" }
+                    
+                },
+                
+            },
+            {
+                $sort:{_id:1}
+            }
+        ]);
+        const orderdetails=await payment.find({status:"delivered"})
+        const totalSales = orderdata.length > 0 ? orderdata[0].totalSales : 0;
+        
+        res.render('salesReports', { admin: 1, orderdata: orderdetails, totalSales: totalSales });
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+
+}
+
+
+
+
+
+  
+
+
 
 
 
@@ -611,7 +710,8 @@ module.exports = {
     addCoupon,
     pushCoupon,
     popCoupon,
-    
+    salesReports
+
 
 
 

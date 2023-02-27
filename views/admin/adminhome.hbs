@@ -1,1 +1,59 @@
-{{!-- <h1>hello</h1> --}}
+<body>
+<div class="container-fluid">
+    <div class="sub-container thehome">
+        <div class="p-3" >
+            <h1 class="thenewarrival">Admin Dasboard</h1>
+            <br>
+            <div class="theArea">
+                <div class="p-5">
+                    <h4 class="eniac-text" >Total Users : {{users}}</h4>
+                    <h4 class="eniac-text" >Total Orders : {{orderCount}}</h4>
+                    <h4 class="eniac-text" >Total Products : {{productCount}}</h4>
+                    <h4 class="eniac-text" >Total Coupons : {{couponCount}}</h4>
+                </div>
+            </div>
+            <br>
+            <div class="theArea">
+                <div class="p-5">
+                    <canvas id="myChart" style="position: absolute;
+                    "></canvas>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+</body>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById("myChart").getContext("2d");
+    var myChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: [{{#each months}}"{{@key}}",{{/each}}],
+    datasets: [{
+        label: "Orders",
+        data: [{{#each months}}{{this}}, {{/each}}],
+        backgroundColor:'transparent',
+            borderColor: '#00000',
+                borderWidth: 2
+    },]
+  },
+    options: {
+        animation: {
+            duration: 2000,
+                easing: "easeInOutQuad"
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
