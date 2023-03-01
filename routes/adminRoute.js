@@ -78,12 +78,12 @@ adminRoute.get('/editBanner',confirm.isLoginAdmin,adminController.editBanner)
 adminRoute.post('/editbanner',upload.single('image'),adminController.patchBanner)
 adminRoute.get('/removeBanner',confirm.isLoginAdmin,adminController.removeBanner)
 
-adminRoute.get('/couponView',adminController.couponManage)
-adminRoute.get('/add-coupon',adminController.addCoupon)
+adminRoute.get('/couponView',confirm.isLoginAdmin,adminController.couponManage)
+adminRoute.get('/add-coupon',confirm.isLoginAdmin,adminController.addCoupon)
 adminRoute.post('/add-coupon',adminController.pushCoupon)
-adminRoute.get('/delete-coupon',adminController.popCoupon)
+adminRoute.get('/delete-coupon',confirm.isLoginAdmin,adminController.popCoupon)
 
-adminRoute.get('/salesReports',adminController.salesReports)
+adminRoute.get('/salesReports',confirm.isLoginAdmin,adminController.salesReports)
 
 
 

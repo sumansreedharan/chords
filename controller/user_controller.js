@@ -496,6 +496,22 @@ const viewProducts = async (req, res) => {
     }
 }
 
+const errorPage = async (req,res)=>{
+   try {
+    res.render('404')
+   } catch (error) {
+    console.log(error.message);
+   }
+}
+
+const orderSuccess = async(req,res)=>{
+    try {
+       res.render('order-success') 
+    } catch (error) {
+      console.log(error.message);  
+    }
+}
+
 
 
 
@@ -522,6 +538,8 @@ module.exports = {
     popaddress,
     categoryList,
     viewProducts,
+    errorPage,
+    orderSuccess
 
 
 

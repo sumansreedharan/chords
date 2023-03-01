@@ -101,6 +101,8 @@ userRoute.post('/validateCoupon',cartcontroller.validateCoupon)
 
 userRoute.get('/invoice',payController.userInvoice)
 
+userRoute.get('/404',userController.errorPage)
+
 
 
 

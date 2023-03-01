@@ -3,8 +3,8 @@ require('dotenv').config()
 
 const sessionSecret = process.env. SessionSecret
 
-const emailUser = process.env.EmailUser
-const emailPassword = process.env. EmailPassword 
+const emailUser = "bcb61smpttest@gmail.com"
+const emailPassword = "askrtcywkrfquxls"
 
 const DB = ()=>{
     const mongoose = require("mongoose")

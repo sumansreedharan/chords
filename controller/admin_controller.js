@@ -415,12 +415,12 @@ const updateCategory = async (req, res, next) => {
 
     try {
 
-        const categoryData = await Category.find({})
+        const categoryData = await Category.findOne({name:req.body.name})
 
         if (categoryData) {
             res.render('category', {
                 category: categoryData,
-                // adminlog: 1,
+                adminlog: 1,
                 error: "Category alreasy exist"
             })
         } else {
@@ -429,7 +429,7 @@ const updateCategory = async (req, res, next) => {
                 _id: req.body.id
             }, {
                 $set: {
-                    name: name
+                    name:name
                 }
             })
 

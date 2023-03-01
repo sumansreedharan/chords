@@ -7,6 +7,7 @@ const session = require('express-session')
 const path = require("path")
 const app = express()
 const connectdb = require('./config/config')
+const { notFound, errorHandler } = require("./middleware/errorHandler");
 connectdb.DB();
 
 
@@ -49,7 +50,8 @@ app.use('/', userRoute)
 const adminRoute = require("./routes/adminRoute");
 app.use('/admin', adminRoute)
 
-
+app.use("*", notFound);
+app.use(errorHandler);
 
 app.listen(3000, function () {
     console.log("server on");
