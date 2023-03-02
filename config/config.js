@@ -9,7 +9,7 @@ const emailPassword = "askrtcywkrfquxls"
 const DB = ()=>{
     const mongoose = require("mongoose")
 mongoose.set('strictQuery', true);
-mongoose.connect(process.env. databaseUrl+process.env. database)
+mongoose.connect(process.env. databaseUrl)
 }
 
 
