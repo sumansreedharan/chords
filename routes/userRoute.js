@@ -103,6 +103,8 @@ userRoute.get('/invoice',payController.userInvoice)
 
 userRoute.get('/404',userController.errorPage)
 
+userRoute.get('/detailorder',payController.orderSuccess)
+
 
 
 
@@ -136,9 +138,6 @@ userRoute.post("/api/payment/verify",(req,res)=>{
       response={"signatureIsValid":"true"}
          res.send(response);
      });
-
-
-
 
 
 module.exports = userRoute;

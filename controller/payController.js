@@ -42,10 +42,25 @@ const cancelMyOrder = async(req,res)=>{
 const userInvoice = async(req,res)=>{
     try {
         const orderData = await payment.find({orderId:req.query.id}).lean()
-        
         res.render('userInvoice',{order:orderData,userlog:1, })
     } catch (error) {
        console.log(error.message); 
+    }
+}
+
+const orderSuccess = async(req,res)=>{
+    try {
+        // if(req.session.pass){
+        //     delete req.seesion.pass
+            const orderData = await payment.find({}).sort({_id:-1}).limit(1)
+            res.render('order-success',{order:orderData}) 
+        // }
+        // else{
+        //     res.redirect('/')
+        // }
+      
+    } catch (error){
+      console.log(error.message);  
     }
 }
     
@@ -55,4 +70,5 @@ module.exports={
     myOrderLoad,
     cancelMyOrder,
     userInvoice,
+    orderSuccess
 }

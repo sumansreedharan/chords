@@ -233,6 +233,7 @@ const placeOrder = async (req, res) => {
        })
     
         if(orderPlacement && clearCart){
+            req.session.pass = "run"
           res.json("success")
         }else{
           const handlePlacementissue = await order.deleteMany({ orderId: orderId,});

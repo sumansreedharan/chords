@@ -504,13 +504,7 @@ const errorPage = async (req,res)=>{
    }
 }
 
-const orderSuccess = async(req,res)=>{
-    try {
-       res.render('order-success') 
-    } catch (error) {
-      console.log(error.message);  
-    }
-}
+
 
 
 
@@ -539,10 +533,5 @@ module.exports = {
     categoryList,
     viewProducts,
     errorPage,
-    orderSuccess
-
-
-
-
 
 }
