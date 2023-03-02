@@ -1,7 +1,9 @@
 const bcrypt = require('bcrypt')
 require('dotenv').config()
 
-const sessionSecret = process.env. SessionSecret
+// const sessionSecret = process.env. SessionSecret
+
+const sessionSecret =  "mysitesessionsecret"
 
 const emailUser = "bcb61smpttest@gmail.com"
 const emailPassword = "askrtcywkrfquxls"

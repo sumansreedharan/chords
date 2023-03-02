@@ -29,7 +29,8 @@ app.engine('hbs', hbs.engine({
 
 app.use(session({
     resave: false,
-    secret:config.sessionSecret,
+    secret: "mysitesessionsecret",
+    //secret:config.sessionSecret,
     saveUninitialized: false,
     cookie: {
         maxAge: 360000,
