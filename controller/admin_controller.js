@@ -638,7 +638,7 @@ const popCoupon = async (req, res) => {
 
 const salesReports = async(req,res) => {
     try {
-
+        
         const orderdata = await payment.aggregate([
             { $match: { status: "delivered" } },
             {
@@ -663,6 +663,17 @@ const salesReports = async(req,res) => {
     }
 
 }
+
+
+
+
+  
+
+
+
+
+
+  
 
 
 

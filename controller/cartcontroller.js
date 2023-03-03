@@ -181,8 +181,8 @@ const placeOrder = async (req, res) => {
         const id = Math.floor(100000 + Math.random() * 900000);
         const orderId = result + id;
         sumTotal = subtotal;
-        const today = moment();
-        const date = today.format('MM/DD/YYYY');
+        // const today = moment();
+        const dateData = new Date();
         const chordsecom =productid.map((item, i) => ({
             id: productid[i],
             name:productname[i],
@@ -207,7 +207,7 @@ const placeOrder = async (req, res) => {
         let data = {
           userId: ObjectId(req.session.user_id),
           orderId: orderId,
-          date: date,
+          date:dateData,
           addressId: addressId,
           product:chordsecom,
           status: "pending",
