@@ -180,9 +180,9 @@ const adminhomeLoad = async (req, res) => {
                 },
             },
         ]);
-
-
-        res.render('adminhome', { months: months, result: result, admin: 1,login:true, users: users, orderCount: orderCount, productCount: productCount, couponCount: couponCount });
+        
+          
+        res.render('adminhome', { months: months, result: result, admin: 1,login:true, users: users, orderCount: orderCount, productCount: productCount, couponCount: couponCount,});
 
     } catch (error) {
         console.log(error.message);
@@ -590,25 +590,52 @@ const addCoupon = async (req, res) => {
     }
 }
 
-const pushCoupon = async (req, res) => {
+// const pushCoupon = async (req, res) => {
+//     try {
+//         const coupon = new Coupon({
+//             name: req.body.name,
+//             offer: req.body.offer,
+//             status: "Active"
+//         })
+
+//         const couponData = await coupon.save()
+//         if (couponData) {
+//             res.redirect('/admin/couponView')
+//         } else {
+//             res.render('add-coupon')
+//         }
+
+//     } catch (error) {
+//         console.log(error.message);
+//     }
+// }
+
+
+const pushCoupon = async(req,res) =>{
     try {
-        const coupon = new Coupon({
-            name: req.body.name,
-            offer: req.body.offer,
-            status: "Active"
-        })
-
-        const couponData = await coupon.save()
-        if (couponData) {
-            res.redirect('/admin/couponView')
+        const couponData = await Coupon.findOne({name:req.body.name})
+        if(couponData){
+            res.render('add-coupon',{admin: 1,
+                error:"Entered coupon already exists"
+            })
         } else {
-            res.render('add-coupon')
-        }
+            const coupon = new Coupon({
+               name:req.body.name,
+               offer:req.body.offer,
+               status:"Active"
+            })
 
+            const couponData = await coupon.save();
+            res.redirect('/admin/couponView')
+        }
     } catch (error) {
-        console.log(error.message);
+       console.log(error.message); 
     }
+
 }
+
+
+
 
 const popCoupon = async (req, res) => {
     try {
@@ -667,21 +694,11 @@ const salesReports = async(req,res) => {
 
 
 
-  
-
-
-
-
-
-  
-
 
 
 
 
   
-
-
 
 
 
@@ -721,7 +738,9 @@ module.exports = {
     addCoupon,
     pushCoupon,
     popCoupon,
-    salesReports
+    salesReports,
+   
+
 
 
 

@@ -1,4 +1,4 @@
-<body>
+<body style="background-color: gray;">
 <div class="container-fluid">
     <div class="sub-container thehome">
         <div class="p-3" >
@@ -7,18 +7,22 @@
             <div class="theArea">
                 <div class="p-5">
                     <h4 class="eniac-text" >Total Users : {{users}}</h4>
+                    <hr>
                     <h4 class="eniac-text" >Total Orders : {{orderCount}}</h4>
+                    <hr>
                     <h4 class="eniac-text" >Total Products : {{productCount}}</h4>
+                    <hr>
                     <h4 class="eniac-text" >Total Coupons : {{couponCount}}</h4>
                 </div>
             </div>
             <br>
             <div class="theArea">
                 <div class="p-5">
-                    <canvas  id="myChart" style="position: absolute;"></canvas>
-                    
-                    
+                    <canvas id="myChart" style="position: absolute; background-color: currentColor;"></canvas>
+                      
                 </div>
+
+               
             </div>
             
         </div>
@@ -38,8 +42,8 @@
     datasets: [{
         label: "Orders",
         data: [{{#each months}}{{this}}, {{/each}}],
-        backgroundColor:'transparent',
-            borderColor: '#00000',
+        backgroundColor:'white',
+            borderColor: 'red',
                 borderWidth: 2
     },]
   },
@@ -51,10 +55,15 @@
         scales: {
             yAxes: [{
                 ticks: {
-                    beginAtZero: true
-                }
+                    beginAtZero: true,
+                   
+                },
             }]
         }
     }
 });
 </script>
+
+
+
+

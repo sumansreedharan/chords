@@ -11,8 +11,8 @@
 
         <div class="row">
             {{#each Product}}
-            <div class=" col-lg-4 col-md-12 mb-4">
-                <div style="border-radius: 1em; height: 3em; width:18em;" class="card">
+            <div class=" col-lg-3 col-md-6 col-sm-12 mb-4">
+                <div style="border-radius: 1em;" class="card">
                     <div class="mask">
                         <div class="d-flex justify-content-start align-items-end h-100">
                             <h5><span class="text-danger"></span></h5>
@@ -31,17 +31,17 @@
                     </div>
                     <div class="card-body">
                         <a href="" class="text-reset text-decoration-none ">
-                            <h5 class="text-light">{{this.name}}</h5>
+                            <h5 class="">{{this.name}}</h5>
                         </a>
-                        <a href="" class="text-light">
+                        <a href="" class="">
                             <p>{{this.category}}</p>
                         </a>
-                        <h6 class="text-light">₹{{this.price}}</h6>
+                        <h6 class="">₹{{this.price}}</h6>
                         {{!-- <li class="list-group-item">Free delivery</li> --}}
                     </div>
                     <div class="card-body">
                         {{#if this.quantity}}
-                        <a class="btn btn-primary" href="/addtocart?id={{this._id}}">Add to Cart</a>
+                        <a class="btn btn-danger" href="/addtocart?id={{this._id}}">Add to Cart</a>
                         {{!-- {{else}} --}}
                         {{!-- <a class="text-decoration-none text-danger " href=""><strong>Out of stock</strong></a> --}}
                         {{/if}}

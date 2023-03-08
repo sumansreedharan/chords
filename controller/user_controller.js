@@ -490,7 +490,7 @@ const categoryList = async (req, res) => {
 const viewProducts = async (req, res) => {
     try {
         const productData = await Product.find({ category: req.query.categoryname, is_deleted: false })
-        res.render('viewProducts', { Product: productData, userlog: 1,})
+        res.render('viewProducts', { Product: productData, userlog: 1,usefooter:1})
     } catch (error) {
         console.log(error.message);
     }
