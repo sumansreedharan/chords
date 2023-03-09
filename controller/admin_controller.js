@@ -464,14 +464,24 @@ const loadCategory = async (req, res) => {
 }
 
 
+// const userOrder = async (req, res) => {
+//     try {
+//         const orderData = await payment.find({}).lean()
+//         res.render('userOrder', { orderData: orderData, admin: 1 })
+//     } catch (error) {
+//         console.log(error.message);
+//     }
+// }
+
 const userOrder = async (req, res) => {
     try {
-        const orderData = await payment.find({}).lean()
+        const orderData = await payment.find({}).sort({date: -1}).lean()
         res.render('userOrder', { orderData: orderData, admin: 1 })
     } catch (error) {
         console.log(error.message);
     }
 }
+
 
 const viewOrders = async (req, res) => {
     try {
@@ -692,6 +702,38 @@ const salesReports = async(req,res) => {
 }
 
 
+const filterOrder = async (req, res) => {
+    try {
+        const reqDate = req.body.fromDate
+        const toDate = req.body.toDate
+
+
+        orderdataFilter = await payment.find(
+            
+            {
+                $and: [
+                    {
+                        date: {
+                            $gt: reqDate,
+                        }
+                    },
+                    {
+                        date: {
+                            $lt: toDate,
+                        }
+                    }]
+            });
+
+        console.log(reqDate, toDate);
+        console.log(orderdataFilter);
+
+        filter = true;
+        res.redirect('/admin/salesReports');
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 
 
 
@@ -739,6 +781,7 @@ module.exports = {
     pushCoupon,
     popCoupon,
     salesReports,
+    filterOrder
    
 
 

@@ -85,6 +85,8 @@ adminRoute.get('/delete-coupon',confirm.isLoginAdmin,adminController.popCoupon)
 
 adminRoute.get('/salesReports',confirm.isLoginAdmin,adminController.salesReports)
 
+adminRoute.post('/filter',adminController.filterOrder)
+
 
 
 

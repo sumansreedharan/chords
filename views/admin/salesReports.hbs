@@ -5,21 +5,13 @@
             <h1 class="text-light">Sales Reports</h1>
 
         {{!-- <div class="col-md-6"> --}}
-        <form action="salesReports" method="GET">
-            <div class="form-row align-items-center">
-                <div class="col-auto">
-                    <label class="sr-only" for="fromDate">From Date</label>
-                    <input type="date" class="form-control mb-2" id="fromDate" name="from" placeholder="From Date">
-                </div>
-                <div class="col-auto">
-                    <label class="sr-only" for="toDate">To Date</label>
-                    <input type="date" class="form-control mb-2" id="toDate" name="to" placeholder="To Date">
-                </div>
-                <div class="col-auto">
-                    <button type="submit" class="btn btn-primary mb-2">Filter</button>
-                </div>
-            </div>
-        </form>
+       <form action="/admin/filter" method="post">
+                        <label for="fromDate" class="text-light">From Date:</label>
+                        <input type="date" name="fromDate">
+                        <label for="toDate" class="text-light">To Date:</label>
+                        <input type="date" name="toDate">
+                        <input type="submit" value="Filter">
+                    </form>
     {{!-- </div> --}}
 
 
@@ -28,7 +20,7 @@
             </div>
             <div class="theArea" id="invoice" >
                 <div class="p-5" >
-                    <h4 class="text-light"><i class="fa-solid fa-truck"></i> TotalSales :₹{{totalSales}}</h4>
+                    {{!-- <h4 class="text-light"> TotalSales :₹{{totalSales}}</h4> --}}
                     <div class="table-responsive text-nowrap">
                        
                         <table class="table" id="">
@@ -52,7 +44,7 @@
                                 {{/each}}
                             </tbody>
                         </table>
-                      <p class="text light">Total Sales: {{totalSales}}</p> 
+                      <h4 class="text-light"> TotalSales :₹{{totalSales}}</h4>
                       
                     </div>
                 </div>
