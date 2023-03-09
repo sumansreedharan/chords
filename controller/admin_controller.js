@@ -687,13 +687,13 @@ const salesReports = async(req,res) => {
                 
             },
             {
-                $sort:{_id:1}
+                $sort:{date:-1}
             }
         ]);
         const orderdetails=await payment.find({status:"delivered"})
         const totalSales = orderdata.length > 0 ? orderdata[0].totalSales : 0;
         
-        res.render('salesReports', { admin: 1, orderdata: orderdetails, totalSales: totalSales });
+        res.render('salesReports', { admin: 1, orderdata: orderdetails, totalSales: totalSales,});
         
     } catch (error) {
         console.log(error.message);
