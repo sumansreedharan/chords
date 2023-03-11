@@ -1,4 +1,4 @@
-<body class="backimage" style="background-image: url(/img/1234.jpg);">
+<body style="background-color: rgb(46, 41, 41);">
     
     <div class="container-fluid login-cont row" style="margin-top: 70px;">
        
@@ -7,22 +7,26 @@
             <div class="inner w-50 " >
                 
               <form  action="" method="post" enctype="multipart/form-data">
-                    <h2 class="text-center">Edit product</h2>
+                    <h2 class="text-light">Edit product</h2>
                     <br>
+                    <p style="float: left;" class="text-light">Product name</p>
                     <input class="form-control" type="text" name="name" placeholder="enter product name" required value="{{product.name}}" >
                     <br>
-                   <input class="form-control" type="text" name="category" placeholder="enter product name" required value="{{product.category}}" >
-                
+                    <p style="float: left;" class="text-light">Category</p>
+                   <input class="form-control" type="text" name="category" placeholder="enter category name" required value="{{product.category}}" >
                     <br>
+                    <p style="float: left;" class="text-light">Price</p>
                     <input class="form-control" type="text" name="price" placeholder="enter price" required value="{{product.price}}">
                     <br>
+                    <p style="float: left;" class="text-light">Description</p>
                     <input class="form-control" type="text" name="description" placeholder="enter description" required value="{{product.description}}">
                     <br>
+                    <p style="float: left;" class="text-light">Select image</p>
                     <input type="file" name="image" multiple class="text-white" value="{{product.image.[0]}}">
                     <br>
                     <input type="hidden" name="id" value="{{product._id}}">
-                    
-                    <input type="text" name="quantity" class="stock" value="{{product.quantity}}" placeholder="enter quantity">
+                    <p style="float: left;" class="text-light">Quantity</p>
+                    <input type="text" name="quantity" class="form-control" value="{{product.quantity}}" placeholder="enter quantity">
 
                     {{!-- <img src="/productImages/{{product.image.[0]}}" alt=""> --}}
                      

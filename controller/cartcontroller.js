@@ -160,7 +160,7 @@ const addCheckoutAddress = async(req,res)=>{
 
 const postCheckoutAddress = async(req,res)=>{
     try {
-        const address = await User.findByIdAndUpdate({_id: req.session.user_id},{$addToSet:{address:req.body}})
+        const address = await User.findByIdAndUpdate({_id: req.session.user_id},{$addToSet:{Address:req.body}})
         res.redirect('/usercart')
     } catch (error) {
        console.log(error)
@@ -171,6 +171,7 @@ const postCheckoutAddress = async(req,res)=>{
 let sumTotal=0;
 let fCoupon;
 let fCouponAmount;
+
 
 const placeOrder = async (req, res) => {
     try {

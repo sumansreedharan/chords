@@ -23,9 +23,9 @@
                                 <td>{{this.mobile}}</td>
                                 <td>
                                     {{#if this.blocked}}
-                                   <a href="/admin/unblockuser?id={{this._id}}" class="btn btn-primary">Unlist</a>
+                                   <a href="/admin/unblockuser?id={{this._id}}" class="btn btn-primary">Unblock</a>
                                     {{else}}
-                                     <a href="/admin/blockuser?id={{this._id}}" class="btn btn-danger" onclick="return confirm('Are you sure to block?')">List</a>
+                                     <a href="/admin/blockuser?id={{this._id}}" class="btn btn-danger" onclick="return confirm('Are you sure to block?')">Block</a>
                                     
                                     {{/if}}
                                 </td>

@@ -374,7 +374,7 @@ const insertCategory = async (req, res) => {
         if (categoryData) {
             res.render('add_category', {
                 // category: categoryData,
-                // adminlog: 1,
+                admin: 1,
                 error: "Entered category already exists"
             })
 
