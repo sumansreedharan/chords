@@ -10,6 +10,7 @@
                         <thead>
                             <tr style="color: aliceblue;">
                                 {{!-- <th scope="col">Address</th> --}}
+                                {{!-- <th scope="col">Product image</th> --}}
                                 <th scope="col">Product name</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Price</th>
@@ -20,10 +21,12 @@
                         </thead>
                         <tbody>
                             {{#each order}}
-
-                            {{#each product}}
                             <tr style="color:aliceblue ;">
                                 {{!-- <td>{{../addressId}}</td> --}}
+                                {{!-- <td><img src="/productImages/{{this.image}}"   style="max-width:18rem;height:auto" class="img-fluid" ></td> --}}
+                            
+
+                            {{#each product}}
                                 <td><strong>{{name}}</strong></td>
                                 <td><strong>{{quantity}}</strong></td>
                                 <td><strong>₹{{price}}</strong></td>  

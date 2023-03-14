@@ -138,6 +138,8 @@ const addAdmin = async (req, res) => {
 
 const adminhomeLoad = async (req, res) => {
     const months = {};
+    const payment_methods ={}
+    const methods = ['','cod','upi']
     const monthNames = [
         "Jan",
         "Feb",
@@ -157,32 +159,40 @@ const adminhomeLoad = async (req, res) => {
         const orders = await payment.find({});
         orders.forEach(function (order) {
             var orderDate = new Date(order.date);
+            let paymentMethod = order.payment_method
+            let paymethods = methods[order.payment_method];
+
+            if (!payment_methods[paymethods]) {
+                payment_methods[paymethods] = 0;
+            }
+            payment_methods[paymethods]++;
             var month = monthNames[orderDate.getMonth()];
             if (!months[month]) {
                 months[month] = 0;
             }
             months[month]++;
         });
+        
 
         const users = await User.countDocuments({});
         const orderCount = await payment.countDocuments({});
         const productCount = await Product.countDocuments({});
         const couponCount = await Coupon.countDocuments({});
 
-        const result = await payment.aggregate([
-            {
-                $group: {
-                    _id: {
-                        month: { $month: "$month" },
-                        year: { $year: "$year" }
-                    },
-                    count: { $sum: 1 },
-                },
-            },
-        ]);
+        // const result = await payment.aggregate([
+        //     {
+        //         $group: {
+        //             _id: {
+        //                 month: { $month: "$month" },
+        //                 year: { $year: "$year" }
+        //             },
+        //             count: { $sum: 1 },
+        //         },
+        //     },
+        // ]);
         
           
-        res.render('adminhome', { months: months, result: result, admin: 1,login:true, users: users, orderCount: orderCount, productCount: productCount, couponCount: couponCount,});
+        res.render('adminhome', { payment_methods,months: months, admin: 1,login:true, users: users, orderCount: orderCount, productCount: productCount, couponCount: couponCount,});
 
     } catch (error) {
         console.log(error.message);
@@ -398,12 +408,13 @@ const insertCategory = async (req, res) => {
 const editCategory = async (req, res) => {
 
     try {
+        
+        
         const id = req.query.id
         const categoryData = await Category.findById({
             _id: id
         })
-        res.render('edit_category', { category: categoryData, admin: 1 });
-
+        res.render('edit_category', { category: categoryData, admin: 1,  });
     } catch (error) {
         console.log(error.message);
     }
@@ -418,11 +429,14 @@ const updateCategory = async (req, res, next) => {
         const categoryData = await Category.findOne({name:req.body.name})
 
         if (categoryData) {
-            res.render('category', {
-                category: categoryData,
-                adminlog: 1,
-                error: "Category alreasy exist"
-            })
+            // res.render('category', {
+            //     category: categoryData,
+            //     adminlog: 1,
+            //     error: "Category alreasy exist"
+            // })
+            
+            req.session.error = "Category alreasy exist"
+            res.redirect('/admin/category');
         } else {
             const name = req.body.name
             const categoryData = await Category.findByIdAndUpdate({
@@ -431,7 +445,9 @@ const updateCategory = async (req, res, next) => {
                 $set: {
                     name:name
                 }
+                
             })
+            
 
             res.redirect('/admin/category');
         }
@@ -457,21 +473,14 @@ const loadCategory = async (req, res) => {
 
     try {
         const categoryData = await Category.find({});
-        res.render('category', { admin: 1, category: categoryData });
+        const error = req.session.error
+        res.render('category', { admin: 1, category: categoryData , error});
+        delete req.session.error
     } catch (error) {
         console.log(error);
     }
 }
 
-
-// const userOrder = async (req, res) => {
-//     try {
-//         const orderData = await payment.find({}).lean()
-//         res.render('userOrder', { orderData: orderData, admin: 1 })
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// }
 
 const userOrder = async (req, res) => {
     try {
@@ -486,6 +495,7 @@ const userOrder = async (req, res) => {
 const viewOrders = async (req, res) => {
     try {
         const orderData = await payment.find({ _id: ObjectID(req.query.id) })
+        console.log(orderData,"ima");
         res.render('viewProducts', { order: orderData, admin: 1 })
     } catch (error) {
         console.log(error.message);

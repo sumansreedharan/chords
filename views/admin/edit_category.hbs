@@ -8,11 +8,12 @@
                     <input class="form-control w-50" type="text" name="name" placeholder="enter category name" value="{{category.name}}" required>
                     <br>               
                     <input type="submit" value="Save" class=" btn cust-btn mt-2 bg-success">
-                    <input type="hidden" name="id" value="{{category._id}}">
+                    <input type="hidden" id="id" name="id" value="{{category._id}}">
                     <br>
-                    <span class="text-danger">{{message}}</span>
+                    <span class="text-danger">{{error}}</span>
                 </form></center>
             </div>
         </div>
     </div>
 </body>
+

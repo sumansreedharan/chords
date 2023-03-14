@@ -16,14 +16,19 @@
                 </div>
             </div>
             <br>
-            <div class="theArea">
-                <div class="p-5">
-                    <canvas id="myChart" style="position: absolute; background-color: currentColor;"></canvas>
+                         <h3>Payment wise</h3>
+                         <div class="p-5" style="width: 50%;">
+                    <canvas id="myChart2"></canvas>
                       
                 </div>
+            {{!-- <div class="theArea"> --}}
+                <h3>Monthly wise sales</h3>
+                <div class="p-5">
+                    <canvas id="myChart" width="100%" style=" background-color: currentColor;"></canvas>
+                      
+                </div>         
+            {{!-- </div> --}}
 
-               
-            </div>
             
         </div>
     </div>
@@ -49,7 +54,35 @@
   },
     options: {
         animation: {
-            duration: 2000,
+            duration: 0,
+                easing: "easeInOutQuad"
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                   
+                },
+            }]
+        }
+   }
+});
+ var ct2 = document.getElementById("myChart2").getContext("2d");
+    var myChart2 = new Chart(ct2, {
+        type: "pie",
+        data: {
+            labels: [{{#each payment_methods}}"{{@key}}",{{/each}}],
+    datasets: [{
+        label: "Orders",
+        data: [{{#each payment_methods}}{{this}}, {{/each}}],
+        backgroundColor:['red','grey'],
+            {{!-- borderColor: 'red', --}}
+                borderWidth: 2
+    },]
+  },
+    options: {
+        animation: {
+            duration: 0,
                 easing: "easeInOutQuad"
         },
         scales: {

@@ -109,6 +109,8 @@ const userCheckout = async(req,res)=>{
             subtotal = subtotal + cartProduct.price * req.body.quantity[i];
             finalAmount = subtotal
         });
+
+       
         res.render("user-checkout", {
             productDetails: cartData[0].Cartproducts,
             subtotal: subtotal,
@@ -175,13 +177,14 @@ let fCouponAmount;
 
 const placeOrder = async (req, res) => {
     try {
-
-      const { productid,productname,payment,subtotal, price, quantity,addressId} = req.body;
-      console.log(req.body, " req");
+        console.log("hi");
+      const { productid,productname,payment,subtotal, price, quantity,addressId,image} = req.body;
+      console.log(req.body,"182");
         const result = Math.random().toString(36).substring(2, 7);
         const id = Math.floor(100000 + Math.random() * 900000);
         const orderId = result + id;
         sumTotal = subtotal;
+        const picture = req.body.image
         // const today = moment();
         const dateData = new Date();
         const chordsecom =productid.map((item, i) => ({
@@ -213,13 +216,15 @@ const placeOrder = async (req, res) => {
           product:chordsecom,
           status: "pending",
           payment_method: String(payment),
-          subtotal: Number(sumTotal)
+          subtotal: Number(sumTotal),
+          image:String(picture)
         };
-        console.log(data);
+        console.log(data, "data");
    
   
    
         const orderPlacement = await order.insertMany(data);
+        console.log("cleared");
         const clearCart= await  User.updateOne({
         _id:req.session.user_id
         },{$set:{

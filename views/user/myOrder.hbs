@@ -1,10 +1,12 @@
 
 <link rel="stylesheet"type="text/css" href="/style/fullstyle.css">
-<section class=" gradient-custom-2">
-  <h2 style="text-align: center; color: aliceblue;">Your orders</h2>
+<section class="">
+  <h2 style="text-align: center; color: rgb(21, 20, 20);">Your orders</h2>
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
+       {{#if length}}
       <div class="card">
+       
         {{#each order}}
       <div class="col-md-12 col-lg-12 col-xl-12 p-5">
         
@@ -90,6 +92,12 @@
       </div>
       {{/each}}
       </div>
+       {{else}}
+      <div class="d-flex justify-content-center">
+        <img  src="/img/nothing.png" style="width: 20vw;" alt="">
+        <h3 style="margin-top: 5em; color: firebrick;">No orders yet</h3>
+      </div>
+      {{/if}}
       
     </div>
   </div>

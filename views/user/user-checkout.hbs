@@ -78,6 +78,7 @@
                                             <input type="hidden" name="productname" value="{{this.name}}">
                                             <input type="hidden" name="quantity" value="{{this.quantity}}">
                                             <input type="hidden" name="price" value="{{this.price}}">
+                                            <input type="hidden" name="picture" value="{{this.image}}">
                                         </tr>
                                         {{/each}}
                                     </tbody>
@@ -96,7 +97,7 @@
                         <div class="cccoupon">
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                 Offer
-                                <h3 id="offer" class="fw-normal">{{offer}}%</h3>
+                                <h3 id="offer" class="fw-normal">{{offer}}</h3>
                             </li>
 
                             <li
@@ -135,7 +136,7 @@
                             <hr>
                         </centre>
                         
-                        <div class="your-payment">
+                        <div class="your-payment mb-5">
                             <h2 class="payment-title mb-3">Payment Method</h2>
                             <br><br>
                             <div class="payment-method">
@@ -218,7 +219,9 @@
 
             finalPriceAmount = famount
 
-            document.getElementById('famount').innerHTML = famount
+
+            document.getElementById('offer').innerHTML =  ' \u20B9 ' + Number(amt)
+            document.getElementById('famount').innerHTML = ' \u20B9 ' + famount
 
         }
     }
@@ -255,7 +258,7 @@
                 //creates new orderId everytime
                 $.ajax(settings).done(function (response) {
                     orderId = response.orderId;
-                    console.log(orderId);
+                    {{!-- console.log(orderId); --}}
                 });
             });
 
@@ -319,6 +322,8 @@
         const payment = Object.values(document.getElementsByName('payment')).filter((item) => item.checked ? item : '').map((item) => item.value)
         const subtotal = document.getElementById('subtotal').value
         const coupon = document.getElementById('couponCode').value
+        const image = Object.values(document.getElementsByName('picture')).map((item) => item.value)
+        
 
 
 
@@ -330,7 +335,8 @@
             addressId: addressId,
             payment: payment,
             subtotal: subtotal,
-            coupon:coupon
+            coupon:coupon,
+            image:image,
 
         }
 

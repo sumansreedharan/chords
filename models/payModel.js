@@ -1,7 +1,7 @@
+const { ObjectId } = require('mongodb');
 const mongoose =  require('mongoose')
 const Schema = mongoose.Schema;
 
-ObjectId = Schema.ObjectId
 
 const paySchema = new Schema({
     userId:{
@@ -42,7 +42,16 @@ const paySchema = new Schema({
     subtotal:{
         type:Number,
         required:true,
-    }
+    },
+    image:{
+        type:String,
+        required:true,
+    },
+    // image:[
+    //     { type:String, 
+    //      required : true}
+    // ]
+
 
 
 })
