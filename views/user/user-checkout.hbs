@@ -78,7 +78,7 @@
                                             <input type="hidden" name="productname" value="{{this.name}}">
                                             <input type="hidden" name="quantity" value="{{this.quantity}}">
                                             <input type="hidden" name="price" value="{{this.price}}">
-                                            <input type="hidden" name="picture" value="{{this.image}}">
+                                            <input type="hidden" name="picture" value="{{this.image.[0]}}">
                                         </tr>
                                         {{/each}}
                                     </tbody>
@@ -167,6 +167,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 
@@ -206,8 +207,9 @@
         else {
 
 
-            let offer = document.getElementById("offer").innerHTML = Number(response)
-            console.log(Number(response))
+            let offer = document.getElementById("offer").innerHTML = Number(response.offerPrice)
+            console.log(Number(response.discountAmount))
+            let discount =Number(response.discountAmount)
 
             let subtotal = document.getElementById('subtotal').value
 
@@ -215,7 +217,12 @@
 
             const amt = Number(subtotal) * Number(offer) / 100
 
-            famount = famount - amt
+            if(amt >= discount){
+                famount = famount - discount
+            }else{
+                famount = famount - amt
+            }
+            
 
             finalPriceAmount = famount
 

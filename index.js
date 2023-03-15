@@ -38,10 +38,14 @@ app.use(session({
 }
 }));
 
+
 app.use(function (req, res, next) {
     res.header('Cache-Control', 'no-cache, no-store');
 next();
 });
+
+
+
 
 const userRoute = require('./routes/userRoute')
 app.use('/', userRoute)

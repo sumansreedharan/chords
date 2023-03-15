@@ -13,7 +13,11 @@
                     <input class="form-control" type="text" name="name" placeholder="enter product name" required value="{{product.name}}" >
                     <br>
                     <p style="float: left;" class="text-light">Category</p>
-                   <input class="form-control" type="text" name="category" placeholder="enter category name" required value="{{product.category}}" >
+                   <select class="form-select" aria-label="Category" type="text" name="category" value="{{product.category}}" placeholder="enter category" required>
+                        {{#each categoryData}}
+                        <option>{{this.name}}</option>
+                        {{/each}}
+                    </select>
                     <br>
                     <p style="float: left;" class="text-light">Price</p>
                     <input class="form-control" type="text" name="price" placeholder="enter price" required value="{{product.price}}">

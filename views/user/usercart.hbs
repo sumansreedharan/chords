@@ -34,9 +34,9 @@
                       <a class="btn btn-primary" onclick="this.parentNode.querySelector('input[type=number]').stepDown();validateData('{{_id}}')">
                         -</a>&nbsp;&nbsp;
                         <div class="form-outline">
-                          <input class="form-control" type="number" id="{{this._id}}" min="1" name="quantity"
+                          <input style="pointer-events: none;" class="form-control" type="number" id="{{this._id}}" min="1" name="quantity"
                             pattern="{{this._id}}" max="{{this.quantity}}" value="1"
-                            onchange="validateData('{{_id}}')" />
+                            onchange="validateData('{{_id}}')"  />
                           <span id="price_text_{{this._id}}" hidden="">{{this.price}} </span>
                         </div>&nbsp;&nbsp;
                         <a class="btn btn-primary" onclick="this.parentNode.querySelector('input[type=number]').stepUp();validateData('{{_id}}')">
@@ -96,7 +96,7 @@
                   {{!-- <hr class="my-4"> --}}
 
                   <div class="d-flex justify-content-between mb-5">
-                    <h5 class="text-uppercase">Total price</h5>
+                    <h5 class="text-uppercase">Total price ₹</h5>
                     <h2 id="sub" class="fw-normal">{{subtotal}}</h2>
                   </div>
                   {{#unless subtotal}}

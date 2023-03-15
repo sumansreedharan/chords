@@ -65,18 +65,18 @@ const verifyLogin = async (req, res) => {
             if (matchPassword) {
 
                 req.session.admin_id = adminData._id
-                // req.session.admin = true
+               
                 res.redirect('/admin/adminhome')
             }
 
             else {
-                // req.session.admin = false;
+                
                 res.render('login', { message: "Email or pasword is incorrect" })
 
             }
 
         } else {
-            // req.session.admin=false;
+          
             res.render('login', { message: "Email or password is incorrect" })
         }
     } catch (error) {
@@ -126,14 +126,6 @@ const addAdmin = async (req, res) => {
     }
 }
 
-// const adminhomeLoad = async (req, res) => {
-//     try {
-//         res.render('adminhome', { admin: 1, login: true })
-
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// }
 
 
 const adminhomeLoad = async (req, res) => {
@@ -250,7 +242,8 @@ const editProduct = async (req, res) => {
 
         const id = req.query.id
         const productData = await Product.findById({ _id: id })
-        res.render('edit_products', { product: productData, admin: 1 })
+        const categoryData = await Category.find({});
+        res.render('edit_products', { product: productData, admin: 1,categoryData })
 
     } catch (error) {
         console.log(error.message);
@@ -383,7 +376,7 @@ const insertCategory = async (req, res) => {
         const categoryData = await Category.findOne({ name: req.body.name })
         if (categoryData) {
             res.render('add_category', {
-                // category: categoryData,
+                
                 admin: 1,
                 error: "Entered category already exists"
             })
@@ -429,11 +422,7 @@ const updateCategory = async (req, res, next) => {
         const categoryData = await Category.findOne({name:req.body.name})
 
         if (categoryData) {
-            // res.render('category', {
-            //     category: categoryData,
-            //     adminlog: 1,
-            //     error: "Category alreasy exist"
-            // })
+            
             
             req.session.error = "Category alreasy exist"
             res.redirect('/admin/category');
@@ -484,7 +473,7 @@ const loadCategory = async (req, res) => {
 
 const userOrder = async (req, res) => {
     try {
-        const orderData = await payment.find({}).sort({date: -1}).lean()
+        const orderData = await payment.find({}).sort({date: -1}).lean()  
         res.render('userOrder', { orderData: orderData, admin: 1 })
     } catch (error) {
         console.log(error.message);
@@ -610,25 +599,6 @@ const addCoupon = async (req, res) => {
     }
 }
 
-// const pushCoupon = async (req, res) => {
-//     try {
-//         const coupon = new Coupon({
-//             name: req.body.name,
-//             offer: req.body.offer,
-//             status: "Active"
-//         })
-
-//         const couponData = await coupon.save()
-//         if (couponData) {
-//             res.redirect('/admin/couponView')
-//         } else {
-//             res.render('add-coupon')
-//         }
-
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// }
 
 
 const pushCoupon = async(req,res) =>{
@@ -642,6 +612,7 @@ const pushCoupon = async(req,res) =>{
             const coupon = new Coupon({
                name:req.body.name,
                offer:req.body.offer,
+               amount:req.body.amount,
                status:"Active"
             })
 
@@ -681,68 +652,57 @@ const popCoupon = async (req, res) => {
 }
 
 
+let filter = false;
 
+const salesReports = async (req, res) => {
+  try {
+    const orderdata = await payment.aggregate([
+      { $match: { status: "delivered" } },
+      {
+        $group: {
+          _id: null,
+          totalSales: { $sum: "$subtotal" }
+        }
+      },
+      {
+        $sort: { _id: 1 }
+      }
+    ]);
+    const totalSales = orderdata.length > 0 ? orderdata[0].totalSales : 0;
 
-const salesReports = async(req,res) => {
-    try {
-        
-        const orderdata = await payment.aggregate([
-            { $match: { status: "delivered" } },
-            {
-                $group: {
-                    _id: null,
-                    totalSales: { $sum: "$subtotal" }
-                    
-                },
-                
-            },
-            {
-                $sort:{date:-1}
-            }
-        ]);
-        const orderdetails=await payment.find({status:"delivered"})
-        const totalSales = orderdata.length > 0 ? orderdata[0].totalSales : 0;
-        
-        res.render('salesReports', { admin: 1, orderdata: orderdetails, totalSales: totalSales,});
-        
-    } catch (error) {
-        console.log(error.message);
+    let orderdataToRender;
+    if (!filter) {
+      orderdataToRender = await payment.find({ status: "delivered" }).sort({ date: -1 });
+    } else {
+      orderdataToRender = orderFilter;
     }
 
-}
-
+    filter = false;
+    res.render("salesReports", { admin: 1, orderdata: orderdataToRender, totalSales: totalSales });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 const filterOrder = async (req, res) => {
-    try {
-        const reqDate = req.body.fromDate
-        const toDate = req.body.toDate
+  try {
+    const reqDate = new Date(req.body.fromDate);
+    const toDate = new Date(req.body.toDate);
 
+    toDate.setDate(toDate.getDate()+1);
 
-        orderdataFilter = await payment.find(
-            
-            {
-                $and: [
-                    {
-                        date: {
-                            $gt: reqDate,
-                        }
-                    },
-                    {
-                        date: {
-                            $lt: toDate,
-                        }
-                    }]
-            });
+    orderFilter = await payment.find({
+      status: "delivered",
+      date: { $gte: reqDate, $lte: toDate }
+    }).sort({ date: -1 });
 
-        console.log(reqDate, toDate);
-        console.log(orderdataFilter);
+    filter = true;
+    res.redirect("/admin/salesReports");
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
-        filter = true;
-        res.redirect('/admin/salesReports');
-    } catch (error) {
-        console.log(error.message);
-    }
-}
 
 
 

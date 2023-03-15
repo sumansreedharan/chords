@@ -14,6 +14,7 @@
                         <tr class="text-light">
                             <th scope="col">Name</th>
                             <th scope="col">Offer</th>
+                            <th scope="col">Maximum offer</th>
                             <th scope="col">Status</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -23,6 +24,7 @@
                         <tr class="text-light">
                             <td>{{this.name}}</td>
                             <td>{{this.offer}}%</td>
+                            <td>{{this.amount}}₹</td>
                             <td>{{this.status}}</td>
                             <td>
                                 {{#iftrue this.status "Active"}}

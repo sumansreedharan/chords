@@ -4,13 +4,13 @@
     <div class="container-fluid">
         <div class="sub-container thehome">
             <div class="p-3">
-                <h1 class="text-light"> Users Ordered Products</h1>
-                <div class="theArea">
-                    <table class="table">
+                <h1 class="text-light text-center "> Users Ordered Products</h1>
+                <div class="theArea container my-4">
+                    <table class="table table-hover table-dark table-striped">
                         <thead>
                             <tr style="color: aliceblue;">
                                 {{!-- <th scope="col">Address</th> --}}
-                                {{!-- <th scope="col">Product image</th> --}}
+                                <th scope="col">Product image</th>
                                 <th scope="col">Product name</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Price</th>
@@ -23,10 +23,11 @@
                             {{#each order}}
                             <tr style="color:aliceblue ;">
                                 {{!-- <td>{{../addressId}}</td> --}}
-                                {{!-- <td><img src="/productImages/{{this.image}}"   style="max-width:18rem;height:auto" class="img-fluid" ></td> --}}
+                                <td><img src="/productImages/{{this.image}}"   style='width:7rem' class="img-fluid" ></td>
                             
 
                             {{#each product}}
+                            
                                 <td><strong>{{name}}</strong></td>
                                 <td><strong>{{quantity}}</strong></td>
                                 <td><strong>₹{{price}}</strong></td>  

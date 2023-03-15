@@ -3,16 +3,6 @@ const payment = require('../models/payModel');
 const moment = require('moment')
 
 
-// const myOrderLoad = async(req,res)=>{
-//     try {
-//         const orderData = await payment.find({userId:req.session.user_id}).sort({date: -1});
-//         const length = orderData.length
-//         res.render('myOrder',{order:orderData,secnav:1,usefooter:1,length})
-//     } catch (error) {
-//         console.log(error)
-//     }
-// }
-
 
 const myOrderLoad = async (req, res) => {
     try {
@@ -86,8 +76,7 @@ const userInvoice = async(req,res)=>{
 
 const orderSuccess = async(req,res)=>{
     try {
-        // if(req.session.pass){
-        //     delete req.seesion.pass
+        
             const orderData = await payment.find({}).sort({_id:-1}).limit(1)
             const serverDate = new Date(orderData[0].date);
             

@@ -134,13 +134,14 @@ const validateCoupon = async (req, res) => {
 
         if (couponData && couponData.status == "Active") {
             offerPrice = couponData.offer
+            let discountAmount = couponData.amount
 
             if (userData) {
                 res.json("fail")
             } else {
 
                 const CouponData = await Coupon.updateOne({ name: codeId }, { $push: { userId: req.session.user_id } })
-                res.json(offerPrice)
+                res.json({offerPrice,discountAmount})
             }
         }else{
             res.json("NOT")
@@ -163,7 +164,7 @@ const addCheckoutAddress = async(req,res)=>{
 const postCheckoutAddress = async(req,res)=>{
     try {
         const address = await User.findByIdAndUpdate({_id: req.session.user_id},{$addToSet:{Address:req.body}})
-        res.redirect('/usercart')
+        res.redirect('/userCart')
     } catch (error) {
        console.log(error)
  
@@ -194,15 +195,22 @@ const placeOrder = async (req, res) => {
             quantity: quantity[i]
     
         }));
+        console.log(req.body.image);
 
         if(req.body.coupon){
             fCoupon = req.body.coupon
 
             const couponApplied = await Coupon.findOne({name: req.body.coupon})
             fCouponAmount = couponApplied.offer
+            let theDiscount = couponApplied.amount
             if(fCouponAmount && subtotal){
                 const amount = (subtotal*fCouponAmount)/100
-                sumTotal = subtotal - amount
+                if(amount >= theDiscount){
+                    sumTotal = subtotal - theDiscount
+                }else{
+                    sumTotal = subtotal - amount
+                }
+                
             }else{
                 sumTotal = subtotal
             }
