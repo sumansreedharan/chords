@@ -87,7 +87,7 @@ adminRoute.get('/salesReports',confirm.isLoginAdmin,adminController.salesReports
 
 adminRoute.post('/filter',adminController.filterOrder)
 
-
+adminRoute.delete('/removeimage/:img/:id',adminController.deleteImage)
 
 
 

@@ -254,18 +254,26 @@ const editProduct = async (req, res) => {
 
 const updateproduct = async (req, res, next) => {
     try {
+        const images = req.files.map((file) => {
+            return file.filename
+        })
         const id = req.body.id
-        if (req.file) {
+        const price = parseFloat(req.body.price) // ensure that price is a valid number
+        if (images) {
             const productData = await Product.findByIdAndUpdate({
                 _id: id
             }, {
                 $set: {
                     name: req.body.name,
                     category: req.body.category,
-                    price: req.body.description,
+                    price: price, // use the parsed price value
                     quantity: req.body.quantity,
-                    image: req.file.filename
-                }
+                },
+                $push: {
+                    image: {
+                        $each: images ?? []
+                    }
+                },
             })
         } else {
             const productData = await Product.findByIdAndUpdate({
@@ -274,7 +282,7 @@ const updateproduct = async (req, res, next) => {
                 $set: {
                     name: req.body.name,
                     category: req.body.category,
-                    price: req.body.price,
+                    price: price, // use the parsed price value
                     description: req.body.description,
                     quantity: req.body.quantity,
                 }
@@ -285,6 +293,8 @@ const updateproduct = async (req, res, next) => {
         console.log(error);
     }
 }
+
+
 
 const deleteProduct = async (req, res, next) => {
     try {
@@ -473,8 +483,10 @@ const loadCategory = async (req, res) => {
 
 const userOrder = async (req, res) => {
     try {
-        const orderData = await payment.find({}).sort({date: -1}).lean()  
-        res.render('userOrder', { orderData: orderData, admin: 1 })
+        
+        const orderData = await payment.find({}).sort({date: -1}).lean()
+        const date = moment(orderData.date).format("MMMM Do YYYY, h:mm a");  
+        res.render('userOrder', { orderData: orderData, admin: 1,adminDate:date })
     } catch (error) {
         console.log(error.message);
     }
@@ -704,6 +716,30 @@ const filterOrder = async (req, res) => {
 };
 
 
+const deleteImage = async (req, res ,next) => {
+    try {
+        const {
+            img,
+            id
+        } = req.params
+        const result = await Product.updateOne({
+            _id: id
+        }, {
+            $pull: {
+                image: img
+            }
+        });
+        if (result) {
+            res.json("success")
+        } else {
+            res.json('error')
+        }
+
+    } catch (error) {
+        next(error);
+    }
+}
+
 
 
 
@@ -751,7 +787,8 @@ module.exports = {
     pushCoupon,
     popCoupon,
     salesReports,
-    filterOrder
+    filterOrder,
+    deleteImage
    
 
 

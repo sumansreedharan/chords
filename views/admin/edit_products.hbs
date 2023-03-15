@@ -36,7 +36,37 @@
                      
                     <input type="submit" value="Edit" class=" btn cust-btn mt-2 bg-primary">
                 </form> 
+
+                {{#each product}}
+                <div class="row">
+                    <div>{{#each image}}
+                        <img class="img-fluid w-25" src="/productImages/{{this}}" alt="...">
+                        <button onclick="removeCartProduct('{{this}}','{{../_id}}')"> <i
+                                class="fas fa-times"></i></a></button>
+                        {{/each}}
+                    </div>
+
+                </div>
+                {{/each}}
+
             </div>
         </div> </center>  
     </div>
 </body>
+
+
+<script>
+    async function removeCartProduct(imagename, productId) {
+        let response = await fetch('/admin/removeimage/' + imagename + '/' + productId, {
+             method: 'DELETE', headers: {
+        'Content-Type': 'application/json',
+      },
+        });
+        let res = await response.json();
+          if (res == "success") {
+      window.location.reload()
+
+    }
+
+    }
+</script>
