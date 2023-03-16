@@ -271,7 +271,8 @@ const updateproduct = async (req, res, next) => {
                 },
                 $push: {
                     image: {
-                        $each: images ?? []
+                        // $each: images ?? []
+                        $each: images ? images : []
                     }
                 },
             })
