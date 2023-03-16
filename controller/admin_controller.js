@@ -485,9 +485,12 @@ const loadCategory = async (req, res) => {
 const userOrder = async (req, res) => {
     try {
         
-        const orderData = await payment.find({}).sort({date: -1}).lean()
-        const date = moment(orderData.date).format("MMMM Do YYYY, h:mm a");  
-        res.render('userOrder', { orderData: orderData, admin: 1,adminDate:date })
+        const orderData = await payment.find({}).sort({date: -1}); 
+        const formattedOrderData = orderData.map((order) => ({
+            ...order._doc,
+            date: moment(order.date).format("MM/DD/YYYY"),
+          }));
+        res.render('userOrder', { orderData: formattedOrderData, admin: 1})
     } catch (error) {
         console.log(error.message);
     }
@@ -691,7 +694,11 @@ const salesReports = async (req, res) => {
     }
 
     filter = false;
-    res.render("salesReports", { admin: 1, orderdata: orderdataToRender, totalSales: totalSales });
+    const formattedOrderData = orderdataToRender.map((order) => ({
+        ...order._doc,
+        date: moment(order.date).format("MM/DD/YYYY"),
+      }));
+    res.render("salesReports", { admin: 1, orderdata: formattedOrderData, totalSales: totalSales });
   } catch (error) {
     console.log(error.message);
   }
