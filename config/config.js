@@ -11,7 +11,9 @@ const emailPassword = "askrtcywkrfquxls"
 const DB = ()=>{
     const mongoose = require("mongoose")
 mongoose.set('strictQuery', false);
-mongoose.connect("mongodb+srv://sumankannath:Suman123@cluster0.hrget3n.mongodb.net/?retryWrites=true&w=majority")
+// mongoose.connect("mongodb+srv://sumankannath:Suman123@cluster0.hrget3n.mongodb.net/?retryWrites=true&w=majority")
+mongoose.connect("mongodb://127.0.0.1:27017/"+"chordsProject"),
+console.log("db connected");
 }
 
 
